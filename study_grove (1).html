@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Grove — PA P&amp;C Law Weak Spots</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Nunito:wght@400;600;700;800&display=swap');
+
+  :root{
+    --moss-deep:#0E2617;
+    --moss:#134026;
+    --forest:#1D6B3A;
+    --leaf:#2E9E4F;
+    --leaf-bright:#5FCB7E;
+    --mint:#AEE8C1;
+    --cream:#F2F0E2;
+    --bark:#4A3826;
+    --amber:#D69A22;
+    --sun:#EFC959;
+    --coral:#E8836B;
+    --ink:#122016;
+    --sub:#43614D;
+    --line:rgba(29,107,58,0.28);
+    --panel:rgba(255,255,255,0.68);
+    --panel-deep:rgba(255,255,255,0.92);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Nunito',sans-serif; color:var(--ink);
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -8%, rgba(46,158,79,0.4), transparent 60%),
+      radial-gradient(ellipse 800px 600px at 100% 15%, rgba(214,154,34,0.2), transparent 55%),
+      radial-gradient(ellipse 700px 500px at 40% 110%, rgba(19,64,38,0.32), transparent 60%),
+      linear-gradient(160deg, var(--cream) 0%, #DCEBD9 40%, #C7E2C4 100%);
+    background-attachment:fixed;
+    position:relative; overflow-x:hidden;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:0.55;
+    background-image:
+      radial-gradient(2px 2px at 8% 20%, rgba(46,158,79,0.5), transparent 60%),
+      radial-gradient(2px 2px at 25% 70%, rgba(214,154,34,0.4), transparent 60%),
+      radial-gradient(1.5px 1.5px at 42% 15%, rgba(95,203,126,0.5), transparent 60%),
+      radial-gradient(2px 2px at 60% 85%, rgba(29,107,58,0.4), transparent 60%),
+      radial-gradient(1.5px 1.5px at 78% 35%, rgba(214,154,34,0.35), transparent 60%),
+      radial-gradient(2px 2px at 92% 65%, rgba(95,203,126,0.4), transparent 60%);
+    background-size:180% 180%;
+    animation:driftGlow 9s ease-in-out infinite alternate;
+  }
+  @keyframes driftGlow{0%{background-position:0% 0%;}100%{background-position:30% 20%;}}
+
+  /* ---------- Grove FX: heat glow, drifting leaves, prairie wisps, embers ---------- */
+  html{--heat:0;}
+  .grove-fx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+
+  .heat-glow{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    opacity:var(--heat);
+    transition:opacity 1.6s ease;
+    background:
+      radial-gradient(ellipse 1100px 750px at 50% 108%, rgba(255,86,20,0.7), transparent 62%),
+      radial-gradient(ellipse 750px 550px at 12% -6%, rgba(255,152,40,0.4), transparent 58%),
+      radial-gradient(ellipse 850px 650px at 92% 8%, rgba(214,32,10,0.38), transparent 60%),
+      radial-gradient(ellipse 600px 900px at 50% 50%, rgba(255,110,20,0.18), transparent 65%);
+    animation:heatPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes heatPulse{0%,100%{filter:brightness(1) saturate(1);}50%{filter:brightness(1.14) saturate(1.2);}}
+
+  .embers-wrap{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:var(--heat);transition:opacity 1.4s ease;}
+  .ember-fx{
+    position:absolute;bottom:-12px;width:5px;height:5px;border-radius:50%;
+    background:radial-gradient(circle,#FFE3A0,#E8500F 65%,transparent 100%);
+    box-shadow:0 0 9px 2px rgba(255,120,20,0.75);
+    animation:emberRise linear infinite;
+  }
+  @keyframes emberRise{
+    0%{transform:translate(0,0) scale(0.7);opacity:0;}
+    12%{opacity:.95;}
+    100%{transform:translate(var(--ex,24px),-108vh) scale(1.1);opacity:0;}
+  }
+
+  .leaf-fx{
+    position:absolute;top:-6vh;left:0;font-size:1.35em;opacity:0;
+    filter:drop-shadow(0 2px 3px rgba(20,40,20,0.22));
+    animation:leafFall linear infinite;
+    transition:filter 1.2s ease;
+  }
+  body.heat-warm .leaf-fx, body.heat-hot .leaf-fx, body.heat-inferno .leaf-fx{filter:drop-shadow(0 2px 3px rgba(90,20,10,0.3)) sepia(0.5) saturate(2.2) hue-rotate(-20deg);}
+  @keyframes leafFall{
+    0%{transform:translate(0,0) rotate(0deg);opacity:0;}
+    8%{opacity:.85;}
+    50%{transform:translate(var(--dx,60px),58vh) rotate(170deg);}
+    92%{opacity:.75;}
+    100%{transform:translate(calc(var(--dx,60px) * -0.6),118vh) rotate(330deg);opacity:0;}
+  }
+
+  .wisp-fx{
+    position:absolute;bottom:-8vh;width:280px;height:70px;border-radius:50%;
+    background:radial-gradient(closest-side, rgba(174,232,193,0.5), transparent 72%);
+    filter:blur(16px);opacity:0;
+    animation:wispDrift linear infinite;
+    transition:background 1.6s ease;
+  }
+  body.heat-warm .wisp-fx{background:radial-gradient(closest-side, rgba(239,201,89,0.45), transparent 72%);}
+  body.heat-hot .wisp-fx, body.heat-inferno .wisp-fx{background:radial-gradient(closest-side, rgba(232,131,107,0.5), transparent 72%);}
+  @keyframes wispDrift{
+    0%{transform:translate(-22vw,0) scaleX(0.85);opacity:0;}
+    16%{opacity:.55;}
+    50%{transform:translate(48vw,-7vh) scaleX(1.15);}
+    84%{opacity:.5;}
+    100%{transform:translate(118vw,-2vh) scaleX(0.9);opacity:0;}
+  }
+
+  .wrap{max-width:920px;margin:0 auto;padding:28px 20px 60px;position:relative;z-index:1;}
+
+  header{text-align:center;margin-bottom:18px;position:relative;}
+  .leaf-corner{position:absolute;font-size:2.4em;opacity:0.5;filter:drop-shadow(0 4px 6px rgba(23,54,32,0.15));}
+  .leaf-corner.tl{top:-10px;left:-6px;transform:rotate(-18deg);}
+  .leaf-corner.tr{top:-10px;right:-6px;transform:rotate(20deg) scaleX(-1);}
+  h1{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(28px,5vw,42px);margin:0 0 6px;color:var(--moss-deep);}
+  .h1-sprout{color:var(--forest);}
+  .subtitle{color:var(--sub);font-size:14px;max-width:520px;margin:0 auto;line-height:1.5;}
+
+  .topbar{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:16px 0 6px;}
+  .toggle-btn{
+    background:var(--panel);border:1.5px solid var(--line);border-radius:100px;padding:7px 15px;
+    font-size:12.5px;font-weight:700;color:var(--moss);cursor:pointer;backdrop-filter:blur(6px);
+    display:flex;align-items:center;gap:6px;transition:.15s;
+  }
+  .toggle-btn:hover{border-color:var(--forest);box-shadow:0 2px 10px rgba(46,125,70,0.15);}
+  .toggle-btn.is-off{opacity:0.55;}
+
+  .grove-progress{max-width:420px;margin:16px auto 26px;text-align:center;}
+  .grove-progress .gp-label{font-size:11px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--sub);margin-bottom:6px;}
+  .grove-track{height:10px;border-radius:6px;background:rgba(46,125,70,0.14);overflow:hidden;border:1px solid var(--line);}
+  .grove-fill{height:100%;background:linear-gradient(90deg,var(--leaf),var(--leaf-bright));border-radius:6px;transition:width .5s;}
+  .grove-pct{font-size:11px;color:var(--sub);margin-top:4px;font-weight:700;}
+
+  /* ---------- Mode select cards ---------- */
+  .mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:8px;}
+  .mode-card{
+    background:var(--panel);border:1.5px solid var(--line);border-radius:20px;padding:22px 20px;
+    cursor:pointer;transition:.2s;backdrop-filter:blur(8px);position:relative;overflow:hidden;
+    box-shadow:0 4px 18px rgba(23,54,32,0.06);
+  }
+  .mode-card:hover{transform:translateY(-3px);border-color:var(--forest);box-shadow:0 10px 28px rgba(23,54,32,0.14);}
+  .mode-card .micon{font-size:1.9em;margin-bottom:8px;}
+  .mode-card .mtitle{font-family:'Fraunces',serif;font-weight:700;font-size:1.15em;color:var(--moss-deep);margin-bottom:6px;}
+  .mode-card .mdesc{font-size:0.85em;color:var(--sub);line-height:1.5;}
+  .mode-card .mbadge{
+    position:absolute;top:14px;right:14px;font-size:10px;font-weight:800;background:var(--mint);
+    color:var(--moss);padding:3px 9px;border-radius:20px;
+  }
+
+  /* ---------- Section intro card ---------- */
+  .section-intro-card{
+    background:linear-gradient(160deg,var(--moss-deep),var(--moss));color:#EAF6ED;
+    border-radius:22px;padding:34px 28px;text-align:center;box-shadow:0 14px 34px rgba(14,38,23,0.35);
+  }
+  .section-intro-card .si-icon{font-size:2.6em;margin-bottom:10px;}
+  .section-intro-card .si-eyebrow{font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--leaf-bright);margin-bottom:8px;}
+  .section-intro-card h3{font-family:'Fraunces',serif;font-size:1.4em;margin:0 0 14px;}
+  .section-intro-card p{font-size:0.95em;line-height:1.6;color:#D9EFDE;max-width:440px;margin:0 auto 22px;}
+  .section-intro-card button{
+    background:linear-gradient(135deg,var(--leaf),var(--leaf-bright));color:#0E2617;border:none;
+    padding:12px 28px;border-radius:100px;font-weight:800;cursor:pointer;font-size:14px;
+  }
+  .section-progress-dots{display:flex;justify-content:center;gap:6px;margin-bottom:14px;}
+  .spd-dot{width:8px;height:8px;border-radius:50%;background:rgba(29,107,58,0.2);}
+  .spd-dot.done{background:var(--leaf);}
+  .spd-dot.current{background:var(--amber);width:20px;border-radius:5px;}
+
+  .trouble-panel{
+    max-width:640px;margin:22px auto 0;background:var(--panel);border:1.5px solid var(--line);
+    border-radius:16px;padding:16px 18px;backdrop-filter:blur(6px);
+  }
+  .trouble-panel h4{margin:0 0 10px;font-family:'Fraunces',serif;font-size:1em;color:var(--moss-deep);}
+  .tp-empty{font-size:13px;color:var(--sub);font-style:italic;}
+  .trouble-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
+  .trouble-list li{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;background:var(--panel-deep);border:1px solid var(--line);border-radius:8px;padding:7px 10px;}
+  .tp-count{font-weight:800;color:var(--coral);white-space:nowrap;}
+  .tp-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .tp-action-btn{
+    background:var(--panel-deep);border:1.5px solid var(--line);color:var(--moss);border-radius:100px;
+    padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;
+  }
+  .tp-action-btn:hover{border-color:var(--forest);}
+  .tp-action-btn.download{background:linear-gradient(135deg,var(--leaf),var(--forest));color:#fff;border:none;}
+
+  /* ---------- Review Notes stage ---------- */
+  .review-list{display:flex;flex-direction:column;gap:14px;}
+  .review-item{
+    background:var(--panel);border:1.5px solid var(--line);border-radius:16px;padding:18px 20px;backdrop-filter:blur(6px);
+  }
+  .review-item-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
+  .review-item-cat{font-size:11px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--forest);background:var(--mint);padding:3px 10px;border-radius:20px;}
+  .review-item-count{font-size:11.5px;font-weight:800;color:var(--coral);}
+  .review-item-q{font-family:'Fraunces',serif;font-weight:600;font-size:1.02em;line-height:1.4;margin-bottom:8px;color:var(--ink);}
+  .review-item-a{font-size:0.9em;line-height:1.55;color:var(--sub);}
+  .review-item-a b{color:var(--forest);}
+
+  /* ---------- Shared study stage ---------- */
+  .stage{display:none;max-width:640px;margin:0 auto;}
+  .stage.active{display:block;}
+  .stage-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+  .back-btn{background:none;border:1.5px solid var(--line);border-radius:100px;padding:6px 14px;font-size:12.5px;font-weight:700;color:var(--moss);cursor:pointer;}
+  .back-btn:hover{border-color:var(--forest);}
+  .stage-title{font-family:'Fraunces',serif;font-weight:700;font-size:1.2em;color:var(--moss-deep);}
+  .stage-score{font-size:12.5px;color:var(--sub);font-weight:700;}
+
+  /* ---------- Flashcards ---------- */
+  .card-zone{perspective:1400px;margin-bottom:16px;}
+  .flip-card{
+    position:relative;min-height:260px;border-radius:22px;cursor:pointer;
+    transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,.2,.2,1);
+  }
+  .flip-card.flipped{transform:rotateY(180deg);}
+  .card-face{
+    position:absolute;inset:0;backface-visibility:hidden;border-radius:22px;padding:26px 24px;
+    display:flex;flex-direction:column;justify-content:center;
+    box-shadow:0 10px 30px rgba(23,54,32,0.14);
+  }
+  .card-face.front{background:linear-gradient(160deg,#EAF6ED,#D9EEDD);border:1.5px solid var(--line);}
+  .card-face.back{background:linear-gradient(160deg,var(--moss),var(--moss-deep));color:#EAF6ED;transform:rotateY(180deg);}
+  .card-eyebrow{font-size:10.5px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--forest);margin-bottom:10px;}
+  .card-face.back .card-eyebrow{color:var(--leaf-bright);}
+  .card-q{font-family:'Fraunces',serif;font-size:1.15em;font-weight:600;line-height:1.4;color:var(--ink);}
+  .card-a{font-size:0.95em;line-height:1.55;}
+  .card-a b{color:var(--leaf-bright);}
+  .card-hint{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:11px;color:var(--sub);}
+  .card-face.back .card-hint{color:rgba(234,246,237,0.6);}
+  .flash-controls{display:flex;justify-content:center;gap:10px;margin-top:14px;}
+  .fc-btn{border:none;border-radius:100px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;}
+  .fc-btn.miss{background:#FCE2DA;color:var(--coral);}
+  .fc-btn.got-it{background:linear-gradient(135deg,var(--leaf),var(--forest));color:#fff;}
+
+  /* ---------- Quiz ---------- */
+  .quiz-q-tag{font-size:11px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--forest);background:var(--mint);display:inline-block;padding:4px 11px;border-radius:20px;margin-bottom:10px;}
+  .quiz-q{font-family:'Fraunces',serif;font-size:1.2em;font-weight:600;line-height:1.42;background:var(--panel);border:1.5px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:14px;backdrop-filter:blur(6px);}
+  .quiz-choices{display:flex;flex-direction:column;gap:9px;}
+  .quiz-choice-btn{
+    text-align:left;padding:13px 16px;border-radius:13px;border:1.5px solid var(--line);background:var(--panel-deep);
+    color:var(--ink);font-family:'Nunito',sans-serif;font-size:0.98em;cursor:pointer;transition:.12s;
+  }
+  .quiz-choice-btn:hover{border-color:var(--forest);}
+  .quiz-choice-btn.correct{border-color:var(--forest);background:#DFF3E4;color:var(--moss-deep);}
+  .quiz-choice-btn.wrong{border-color:var(--coral);background:#FCE7E1;color:#7A2E1D;}
+  .quiz-choice-btn:disabled{cursor:default;}
+  .quiz-explain{margin-top:14px;padding:14px 16px;border-radius:14px;font-size:0.9em;line-height:1.55;}
+  .quiz-explain.correct{background:#DFF3E4;border:1.5px solid var(--forest);}
+  .quiz-explain.wrong{background:#FCE7E1;border:1.5px solid var(--coral);}
+  .quiz-next-btn{
+    display:block;margin:16px auto 0;background:linear-gradient(135deg,var(--leaf),var(--forest));color:#fff;
+    border:none;padding:12px 28px;border-radius:100px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;
+  }
+  .hint-row{text-align:center;margin:-6px 0 14px;}
+  .hint-btn{
+    background:none;border:1.5px dashed var(--bark);color:var(--bark);border-radius:100px;
+    padding:6px 16px;font-size:12px;font-weight:700;cursor:pointer;
+  }
+  .hint-btn:hover{background:rgba(74,56,38,0.06);}
+  .hint-box{
+    background:#FBF3E3;border:1.5px solid var(--bark);border-left:5px solid var(--amber);
+    border-radius:10px;padding:13px 16px;margin-bottom:14px;font-size:0.88em;line-height:1.5;color:#3A2C1A;
+    display:none;
+  }
+  .hint-box .hb-label{display:block;font-size:10px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);margin-bottom:4px;}
+
+  /* ---------- Podcast mode ---------- */
+  .podcast-wrap{text-align:center;}
+  .podcast-art{
+    width:170px;height:170px;margin:6px auto 20px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,rgba(255,255,255,0.7),var(--mint) 70%);
+    border:3px solid var(--forest);box-shadow:0 14px 30px rgba(23,54,32,0.18);
+    display:flex;align-items:center;justify-content:center;font-size:3.2em;position:relative;overflow:hidden;
+  }
+  .podcast-art.playing::before{
+    content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(76,175,102,0.4),transparent 70%);
+    animation:podPulse 1.7s ease-in-out infinite;
+  }
+  @keyframes podPulse{0%,100%{opacity:.4;transform:scale(1);}50%{opacity:.9;transform:scale(1.08);}}
+  .podcast-tag{font-size:11px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:var(--forest);margin-bottom:6px;}
+  .podcast-title{font-family:'Fraunces',serif;font-weight:700;font-size:1.15em;color:var(--moss-deep);margin-bottom:4px;}
+  .podcast-sub{font-size:12px;color:var(--sub);margin-bottom:16px;font-weight:700;}
+  .podcast-transcript{
+    text-align:left;background:var(--panel);border:1.5px solid var(--line);border-radius:16px;padding:18px 20px;
+    margin-bottom:18px;font-size:0.95em;line-height:1.55;min-height:100px;backdrop-filter:blur(6px);
+  }
+  .podcast-transcript .pt-q{font-weight:700;margin-bottom:8px;color:var(--ink);}
+  .podcast-transcript .pt-a{color:var(--sub);display:none;}
+  .podcast-transcript.revealed .pt-a{display:block;}
+  .podcast-progress-track{height:8px;border-radius:5px;background:rgba(46,125,70,0.14);overflow:hidden;border:1px solid var(--line);margin-bottom:16px;}
+  .podcast-progress-fill{height:100%;background:linear-gradient(90deg,var(--leaf),var(--amber));width:0%;transition:width .3s;}
+  .podcast-controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:14px;}
+  .pc-btn{background:var(--panel-deep);border:1.5px solid var(--line);color:var(--ink);border-radius:50%;width:46px;height:46px;font-size:1.15em;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .pc-btn:hover{border-color:var(--forest);}
+  .pc-btn.play-btn{width:58px;height:58px;background:linear-gradient(135deg,var(--leaf),var(--forest));color:#fff;border:none;font-size:1.3em;}
+  .podcast-speed-row{display:flex;justify-content:center;gap:8px;}
+  .speed-btn{background:var(--panel-deep);border:1.5px solid var(--line);color:var(--sub);border-radius:14px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;}
+  .speed-btn.active{background:var(--amber);color:#4A3308;border-color:#c98f1f;}
+
+  .complete-overlay{
+    display:none;position:fixed;inset:0;background:rgba(23,54,32,0.5);z-index:100;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px);
+  }
+  .complete-overlay.open{display:flex;}
+  .complete-card{
+    background:linear-gradient(160deg,#EAF6ED,#D9EEDD);border:2px solid var(--forest);border-radius:24px;
+    padding:34px 30px;max-width:400px;text-align:center;box-shadow:0 20px 50px rgba(23,54,32,0.3);
+  }
+  .complete-card .cc-icon{font-size:2.6em;margin-bottom:10px;}
+  .complete-card h3{font-family:'Fraunces',serif;color:var(--moss-deep);margin:0 0 10px;}
+  .complete-card p{font-size:14px;color:var(--sub);line-height:1.5;margin:0 0 20px;}
+  .complete-card button{background:linear-gradient(135deg,var(--leaf),var(--forest));color:#fff;border:none;padding:11px 26px;border-radius:100px;font-weight:800;cursor:pointer;font-size:13px;}
+
+  footer{text-align:center;color:var(--sub);font-size:11.5px;margin-top:36px;font-style:italic;}
+
+  @media(max-width:520px){
+    .leaf-corner{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grove-fx" aria-hidden="true">
+  <span class="leaf-fx" style="left:4%;font-size:1.2em;--dx:70px;animation-duration:13s;animation-delay:-1s;">🍃</span>
+  <span class="leaf-fx" style="left:14%;font-size:1.5em;--dx:-50px;animation-duration:17s;animation-delay:-6s;">🍂</span>
+  <span class="leaf-fx" style="left:26%;font-size:1.1em;--dx:40px;animation-duration:11s;animation-delay:-3s;">🍃</span>
+  <span class="leaf-fx" style="left:39%;font-size:1.4em;--dx:-65px;animation-duration:15s;animation-delay:-9s;">🍂</span>
+  <span class="leaf-fx" style="left:52%;font-size:1.15em;--dx:55px;animation-duration:12.5s;animation-delay:-4.5s;">🍃</span>
+  <span class="leaf-fx" style="left:64%;font-size:1.3em;--dx:-35px;animation-duration:16s;animation-delay:-11s;">🍂</span>
+  <span class="leaf-fx" style="left:77%;font-size:1.2em;--dx:60px;animation-duration:13.5s;animation-delay:-2s;">🍃</span>
+  <span class="leaf-fx" style="left:88%;font-size:1.45em;--dx:-45px;animation-duration:18s;animation-delay:-8s;">🍂</span>
+  <span class="leaf-fx" style="left:95%;font-size:1.1em;--dx:30px;animation-duration:12s;animation-delay:-5.5s;">🍃</span>
+
+  <div class="wisp-fx" style="bottom:8%;width:240px;height:60px;animation-duration:26s;animation-delay:-3s;"></div>
+  <div class="wisp-fx" style="bottom:22%;width:320px;height:80px;animation-duration:32s;animation-delay:-14s;"></div>
+  <div class="wisp-fx" style="bottom:38%;width:200px;height:50px;animation-duration:22s;animation-delay:-8s;"></div>
+  <div class="wisp-fx" style="bottom:55%;width:280px;height:70px;animation-duration:29s;animation-delay:-20s;"></div>
+</div>
+<div class="heat-glow" aria-hidden="true"></div>
+<div class="embers-wrap" aria-hidden="true">
+  <span class="ember-fx" style="left:8%;--ex:18px;animation-duration:5.2s;animation-delay:-1s;"></span>
+  <span class="ember-fx" style="left:19%;--ex:-22px;animation-duration:6.1s;animation-delay:-3.4s;"></span>
+  <span class="ember-fx" style="left:31%;--ex:14px;animation-duration:4.7s;animation-delay:-2s;"></span>
+  <span class="ember-fx" style="left:44%;--ex:-16px;animation-duration:5.6s;animation-delay:-4.2s;"></span>
+  <span class="ember-fx" style="left:57%;--ex:20px;animation-duration:5s;animation-delay:-0.6s;"></span>
+  <span class="ember-fx" style="left:68%;--ex:-19px;animation-duration:6.4s;animation-delay:-3s;"></span>
+  <span class="ember-fx" style="left:79%;--ex:16px;animation-duration:4.9s;animation-delay:-2.6s;"></span>
+  <span class="ember-fx" style="left:90%;--ex:-14px;animation-duration:5.8s;animation-delay:-1.4s;"></span>
+</div>
+
+<div class="wrap">
+  <header>
+    <span class="leaf-corner tl">🌿</span><span class="leaf-corner tr">🌿</span>
+    <h1>Study Grove<span class="h1-sprout"> 🌱</span></h1>
+    <div class="subtitle">40 weak spots from your PA P&amp;C practice runs — Aug 18, 2026. Pick a way through the grove.</div>
+  </header>
+
+  <div class="topbar">
+    <button class="toggle-btn" id="ambientBtn" onclick="toggleAmbient()">🌾 Ambient sound</button>
+    <button class="toggle-btn" id="sfxBtn" onclick="toggleSfx()">🍃 Click sound</button>
+    <button class="toggle-btn" id="voiceBtn" onclick="toggleVoice()">🗣️ Read questions aloud</button>
+  </div>
+
+  <div class="grove-progress">
+    <div class="gp-label">Grove growth</div>
+    <div class="grove-track"><div class="grove-fill" id="groveFill"></div></div>
+    <div class="grove-pct" id="grovePct">0% mastered</div>
+  </div>
+
+  <!-- ============ HOME / MODE SELECT ============ -->
+  <div class="stage active" id="homeStage">
+    <div class="mode-grid">
+      <div class="mode-card" onclick="openFlashcards()">
+        <div class="micon">🍃</div>
+        <div class="mtitle">Flashcards</div>
+        <div class="mdesc">Flip through each weak spot at your own pace — question on the front, the real-talk answer on the back. Mark it "got it" or "still fuzzy" as you go.</div>
+      </div>
+      <div class="mode-card" onclick="openQuiz()">
+        <div class="micon">🌻</div>
+        <div class="mtitle">Quiz Mode</div>
+        <div class="mdesc">Multiple choice, reshuffled every run. Answer, get instant feedback and the explanation, then move on. Real recall practice, not just reading.</div>
+      </div>
+      <div class="mode-card" onclick="openPodcast()">
+        <div class="micon">🎧</div>
+        <div class="mtitle">Podcast Mode</div>
+        <div class="mdesc">Hands-free. It reads each question out loud, gives you a beat to think, then walks through the answer — auto-plays through your trouble spots first.</div>
+      </div>
+    </div>
+    <div class="trouble-panel">
+      <h4>🔎 Trouble Spots</h4>
+      <div id="troublePanelBody"><span class="tp-empty">Nothing flagged twice yet — once something trips you up more than once across any mode, it'll show up here.</span></div>
+      <div class="tp-actions" id="tpActions" style="display:none;">
+        <button class="tp-action-btn" onclick="openReviewNotes()">📖 View full notes</button>
+        <button class="tp-action-btn download" onclick="downloadReviewNotes()">📥 Download notes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ REVIEW NOTES ============ -->
+  <div class="stage" id="reviewStage">
+    <div class="stage-bar">
+      <button class="back-btn" onclick="goHome()">← Grove</button>
+      <div class="stage-title">📖 Review Notes</div>
+      <button class="tp-action-btn download" onclick="downloadReviewNotes()">📥 Download</button>
+    </div>
+    <div class="review-list" id="reviewList"></div>
+  </div>
+
+  <!-- ============ FLASHCARDS ============ -->
+  <div class="stage" id="flashStage">
+    <div class="stage-bar">
+      <button class="back-btn" onclick="goHome()">← Grove</button>
+      <div class="stage-title">🍃 Flashcards</div>
+      <div class="stage-score" id="flashCounter">1 / 19</div>
+    </div>
+    <div class="section-progress-dots" id="flashSectionDots"></div>
+    <div id="flashIntroWrap" style="display:none;">
+      <div class="section-intro-card">
+        <div class="si-icon" id="flashIntroIcon"></div>
+        <div class="si-eyebrow">Section</div>
+        <h3 id="flashIntroTitle"></h3>
+        <p id="flashIntroText"></p>
+        <button onclick="flashIntroContinue()">Start this section →</button>
+      </div>
+    </div>
+    <div id="flashCardWrap">
+      <div class="card-zone">
+        <div class="flip-card" id="flipCard" onclick="flipCard()">
+          <div class="card-face front">
+            <div class="card-eyebrow" id="flashCatFront"></div>
+            <div class="card-q" id="flashQ"></div>
+            <div class="card-hint">tap to reveal the answer</div>
+          </div>
+          <div class="card-face back">
+            <div class="card-eyebrow" id="flashCatBack"></div>
+            <div class="card-a" id="flashA"></div>
+            <div class="card-hint">tap to flip back</div>
+          </div>
+        </div>
+      </div>
+      <div class="flash-controls">
+        <button class="fc-btn miss" onclick="flashJudge(false)">Still fuzzy</button>
+        <button class="fc-btn got-it" onclick="flashJudge(true)">Got it →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ QUIZ ============ -->
+  <div class="stage" id="quizStage">
+    <div class="stage-bar">
+      <button class="back-btn" onclick="goHome()">← Grove</button>
+      <div class="stage-title">🌻 Quiz Mode</div>
+      <div class="stage-score" id="quizScoreLabel">0 / 0 correct</div>
+    </div>
+    <div class="section-progress-dots" id="quizSectionDots"></div>
+    <div id="quizIntroWrap" style="display:none;">
+      <div class="section-intro-card">
+        <div class="si-icon" id="quizIntroIcon"></div>
+        <div class="si-eyebrow">Section</div>
+        <h3 id="quizIntroTitle"></h3>
+        <p id="quizIntroText"></p>
+        <button onclick="quizIntroContinue()">Start this section →</button>
+      </div>
+    </div>
+    <div id="quizQuestionWrap">
+      <div class="podcast-progress-track"><div class="podcast-progress-fill" id="quizProgressFill"></div></div>
+      <div class="quiz-q-tag" id="quizCat"></div>
+      <div class="quiz-q" id="quizQ"></div>
+      <div class="hint-row"><button class="hint-btn" id="hintBtn" onclick="toggleHint()">💡 Real talk hint</button></div>
+      <div class="hint-box" id="hintBox"><span class="hb-label">Real talk</span><span id="hintText"></span></div>
+      <div class="quiz-choices" id="quizChoices"></div>
+      <div class="quiz-explain" id="quizExplain" style="display:none;"></div>
+      <button class="quiz-next-btn" id="quizNextBtn" style="display:none;" onclick="nextQuiz()">Next →</button>
+    </div>
+  </div>
+
+  <!-- ============ PODCAST ============ -->
+  <div class="stage" id="podcastStage">
+    <div class="stage-bar">
+      <button class="back-btn" onclick="stopPodcast();goHome();">← Grove</button>
+      <div class="stage-title">🎧 Podcast Mode</div>
+    </div>
+    <div class="podcast-wrap">
+      <div class="podcast-art" id="podcastArt">🌳</div>
+      <div class="podcast-tag" id="podcastTagEl">Trouble Spots</div>
+      <div class="podcast-title" id="podcastTitleEl">Study Grove Radio</div>
+      <div class="podcast-sub" id="podcastSubEl">1 / 19</div>
+      <div class="podcast-progress-track"><div class="podcast-progress-fill" id="podcastProgressFill"></div></div>
+      <div class="podcast-transcript" id="podcastTranscript">
+        <div class="pt-q" id="podcastQText"></div>
+        <div class="pt-a" id="podcastAText"></div>
+      </div>
+      <div class="podcast-controls">
+        <button class="pc-btn" onclick="podcastPrev()">⏮</button>
+        <button class="pc-btn play-btn" id="podcastPlayBtn" onclick="podcastToggle()">▶</button>
+        <button class="pc-btn" onclick="podcastNext()">⏭</button>
+      </div>
+      <div class="podcast-speed-row">
+        <button class="speed-btn" data-speed="0.85" onclick="setPodcastSpeed(0.85)">0.85×</button>
+        <button class="speed-btn active" data-speed="1" onclick="setPodcastSpeed(1)">1×</button>
+        <button class="speed-btn" data-speed="1.25" onclick="setPodcastSpeed(1.25)">1.25×</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>Study Grove · built from your PA P&amp;C law practice misses · grows every time you send more</footer>
+</div>
+
+<div class="complete-overlay" id="completeOverlay">
+  <div class="complete-card">
+    <div class="cc-icon" id="completeIcon">🌳</div>
+    <h3 id="completeTitle">Nice work!</h3>
+    <p id="completeSub"></p>
+    <button onclick="document.getElementById('completeOverlay').classList.remove('open');goHome();">Back to the grove</button>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   DATA — 40 weak spots from Aug 18 2026 PA P&C practice runs (law + coverage)
+   (question #1/"Mary" appeared twice with reshuffled choices — both
+   misses are folded into one card, seeded as an existing repeat miss)
+   ============================================================ */
+const WEAK_SPOTS = [
+  { id:'ws01', cat:'Producer Licensing — Manager/GA Fine', missSeed:2,
+    q:"A producer acts as a manager and exclusive general agent without getting the proper license first. That's a third-degree misdemeanor. What's the maximum fine?",
+    options:["Up to $2,000 per day","Up to $1,000 per day","Up to $5,000 per day","Up to $3,000 per day"],
+    correct:"Up to $1,000 per day",
+    explain:"Operating as a manager or exclusive general agent without the right license isn't just an administrative slap — it's a third-degree misdemeanor, and the fine scales daily: up to $1,000 for each day you're operating without proper licensure. You actually missed this one twice in a row with different wrong picks both times — worth locking in.",
+    hint:"This isn't about right vs. wrong behavior — it's about being unauthorized. Unauthorized activity in PA insurance law tends to get a flat per-day dollar fine, not a percentage or a one-time hit." },
+  { id:'ws02', cat:'Producer Duties — Reporting Charges',
+    q:"If a licensee gets charged with an administrative or criminal offense, how many days do they have to report it to the Department?",
+    options:["45 days","30 days","20 days","60 days"],
+    correct:"30 days",
+    explain:"The moment you're charged with anything administrative or criminal, the clock starts — you've got 30 days to self-report to the Department. It's a duty that falls on you; it doesn't wait for the Department to find out on its own.",
+    hint:"Self-reporting duties in this material love the number 30. If you see \"report within how many days,\" 30 is a strong default guess unless the question gives you a reason to think otherwise." },
+  { id:'ws03', cat:"Commissioner's Authority — Limits",
+    q:"A producer is charged with accepting business from an unlicensed individual, doesn't show up to the hearing, and a violation is confirmed. Which of these is NOT something the Commissioner is authorized to do in response?",
+    options:["Impose a civil penalty up to $5,000 per violation relating to a producer's license","Sentence the producer to up to a year in prison","Refuse to renew or revoke the producer's license","Issue a Cease and Desist order"],
+    correct:"Sentence the producer to up to a year in prison",
+    explain:"The Commissioner is an administrative regulator, not a judge — fines, license revocation, and cease-and-desist orders are all fair game, but actual jail time sits completely outside their authority. Only a court can hand down a criminal penalty like prison.",
+    hint:"Ask yourself if the Commissioner is acting more like a regulator or more like a judge. They're a regulator — and regulators don't send people to prison, no matter how bad the violation." },
+  { id:'ws04', cat:'Cease and Desist Orders',
+    q:"Which statement about a Cease and Desist Order is the FALSE one?",
+    options:["A hearing must happen if an investigation finds enough evidence someone is violating the Act","If a violation counts as unfair competition, the Commissioner may suspend or revoke the producer's license","A Cease and Desist Order can only be issued with a District Court Judge's approval","At a hearing held no less than 10 days after the notice of violation, the producer can make their case against the order being issued"],
+    correct:"A Cease and Desist Order can only be issued with a District Court Judge's approval",
+    explain:"A Cease and Desist order is purely administrative — the Commissioner doesn't need a judge's sign-off. It gets issued once the Department's own investigation turns up sufficient cause. No court involvement required.",
+    hint:"\"Administrative\" is the key word for a Cease and Desist order. The whole point of something being administrative is that it doesn't need a court's blessing to happen." },
+  { id:'ws05', cat:"Commissioner's Fine Authority",
+    q:"One of these statements about the Commissioner's fine authority is false — which one?",
+    options:["An agent violates a Cease and Desist order — the Commissioner may fine up to $10,000","An agent of 6 months unknowingly commits an unfair method of competition — the Commissioner may fine up to $1,000 per violation","An agent violates a Cease and Desist order — the Commissioner may fine up to $15,000","An agent of 20 years knowingly engages in an unfair method of competition — the Commissioner may fine up to $5,000 per violation"],
+    correct:"An agent violates a Cease and Desist order — the Commissioner may fine up to $15,000",
+    explain:"The real cap for violating a Cease and Desist order is $10,000, not $15,000. Keep the tiers straight: unfair-competition violations run $1,000/violation if unknowing, $5,000/violation if the agent knew it was a violation — but a Cease and Desist violation specifically tops out at $10,000.",
+    hint:"There are two separate penalty ladders here — one for unfair competition (scales with whether the agent knew), and a flat one for violating an actual Cease and Desist order. Don't blend the two together." },
+  { id:'ws06', cat:'Unfair Claims Settlement Practices',
+    q:"Which of these actually counts as an unfair claim settlement practice, specifically?",
+    options:["Defamation","Misrepresentation","Not acknowledging receipt of a claim within 10 working days, unless payment's already made by then","Unfair discrimination"],
+    correct:"Not acknowledging receipt of a claim within 10 working days, unless payment's already made by then",
+    explain:"Defamation, misrepresentation, and unfair discrimination all fall under the broader 'unfair insurance practices' umbrella — but the specific claims-handling violation is that 10-working-day acknowledgment rule. Miss that window without already paying the claim, and that's the unfair claim settlement practice.",
+    hint:"Three of these four are general 'don't be shady' rules that apply broadly across insurance conduct. Only one is specifically about handling an actual claim — and it's tied to a deadline." },
+  { id:'ws07', cat:'Referral Fees to Unlicensed Persons',
+    q:"To legally pay a referral fee to someone unlicensed, several conditions must be met. Which of these is NOT actually one of them?",
+    options:["For personal lines referrals, the referring person gets no more than a one-time nominal fee, set at a fixed amount","The referring person can't discuss specific terms of the insurance contract","The fee can't be contingent on a sale actually going through","The person referring is capped at five referrals per week"],
+    correct:"The person referring is capped at five referrals per week",
+    explain:"There's no cap on how many people someone can refer in a week — that rule doesn't exist. The real requirements are: a one-time nominal fee for personal lines referrals, no discussion of policy terms, and the fee can't be contingent on a completed sale.",
+    hint:"There are three real rules here: one-time, nominal, and not tied to a completed sale. If an answer choice invents a specific number — like a weekly cap — be suspicious of it." },
+  { id:'ws08', cat:'Rebates',
+    q:"A consumer willingly takes a $1,000 \"loyalty payment\" for buying a policy. What's this payment actually called?",
+    options:["A rebate","A conspiracy","Collusion","Twisting"],
+    correct:"A rebate",
+    explain:"Any inducement — cash, gifts, anything of value — offered to get someone to buy insurance beyond what's actually in the contract is a rebate. It's illegal for the agent to offer one and illegal for the customer to accept one, even willingly.",
+    hint:"This is really just a naming question. Any 'thanks for buying' payment on top of the actual policy has one specific name in insurance law — it's the simplest, most direct term of the four options." },
+  { id:'ws09', cat:'False Advertising Rules',
+    q:"False advertising law bans most misleading practices — but one of these is actually allowed. Which one?",
+    options:["Giving misleading info about a person's financial condition or an insurer's legal reserve system","Illustrating a non-guaranteed dividend schedule","Claiming that buying insurance entitles the policyholder to shares of stock","Using a policy name or title that's misleading"],
+    correct:"Illustrating a non-guaranteed dividend schedule",
+    explain:"Showing a dividend illustration is allowed — insurers do this all the time — as long as it's clearly disclosed the dividends aren't guaranteed. What's actually banned is misleading financial claims, promising stock ownership from buying a policy, or deceptive policy names.",
+    hint:"Three of these are outright lies you're never allowed to tell. One of them is something you CAN do, but only if you're upfront that it isn't a promise. That's your allowed one." },
+  { id:'ws10', cat:'Commercial P&C Cancellation/Nonrenewal',
+    q:"One of these statements about cancelling or nonrenewing Commercial Property and Casualty coverage is wrong. Which one?",
+    options:["If the insurer cancels because of a material misrepresentation affecting insurability or unpaid premium, they must give 30 days' written notice","If the insurer cancels midterm, unearned premium must go back to the named insured within 10 business days of the termination date","If the named insured cancels, no written notice is required — coverage ends whenever they asked for it to","The insurer must give at least 30 days' notice before a premium increase"],
+    correct:"If the insurer cancels because of a material misrepresentation affecting insurability or unpaid premium, they must give 30 days' written notice",
+    explain:"That specific scenario — material misrepresentation or failure to pay premium — only requires 15 days' notice, not 30. The 30-day rule is for premium increases at renewal. Also remember: midterm insurer cancellations owe unearned premium back within 10 business days, and if the named insured cancels, no notice is required at all.",
+    hint:"There are three different notice windows floating around this topic — match the number to the SPECIFIC trigger (misrepresentation/nonpayment vs. a premium increase), don't just grab whichever number feels the most familiar." },
+  { id:'ws11', cat:'Standard Fire Policy',
+    q:"Which statement about the Standard Fire Policy is actually true?",
+    options:["It protects against physical loss from the perils of Fire and Lightning","It protects against physical loss only from the peril of Fire","It includes protection against vandalism and malicious mischief","Any insurer issuing a property form covering \"fire insurance\" in the state must build in the Standard Fire Policy"],
+    correct:"Any insurer issuing a property form covering \"fire insurance\" in the state must build in the Standard Fire Policy",
+    explain:"Any property form providing fire coverage in Pennsylvania has to build in the Standard Fire Policy — it's the mandatory foundation. The policy itself covers fire, lightning, and removal, not fire alone — and it does NOT include vandalism or malicious mischief.",
+    hint:"Don't confuse what the policy covers with what the LAW requires. One answer here is about a legal mandate, not about the list of covered perils — that's the true one." },
+  { id:'ws12', cat:'Auto Tort Option Notification',
+    q:"Auto insurers have to notify policyholders about the full tort vs. limited tort choice how many days before the first renewal of a private passenger auto policy, at minimum?",
+    options:["45","20","60","30"],
+    correct:"45",
+    explain:"This one's a longer window than most of the other notice periods floating around — 45 days before that first renewal, not the more common 30. Easy to mix up if you're pattern-matching to other PA notice rules.",
+    hint:"45 is the odd number out in most of this material — you'll see 30 and 60 a lot more often. This specific tort-election notice is one of the few 45-day rules, so flag it as an exception." },
+  { id:'ws13', cat:'PIP — Overdue Payment',
+    q:"PIP benefits count as overdue if the insurer doesn't pay within how many days of getting reasonable proof of loss?",
+    options:["20","60","30","15"],
+    correct:"30",
+    explain:"Standard 30-day clock — the same rhythm as most claim-payment timing in PA auto law. Miss that 30-day window after reasonable proof of loss is received, and the payment is officially overdue.",
+    hint:"Same rhythm as a lot of the other timing rules in this material — when you're unsure on a PA claim-payment deadline, 30 days is a strong default guess." },
+  { id:'ws14', cat:'PIP — Additional Benefits Caps',
+    q:"Insurers have to offer additional PIP benefits at certain minimum levels. Which of these is NOT actually one of the real minimums?",
+    options:["At least $100,000 in medical benefits","$50,000 in accidental death benefits","At least $2,500/month in income loss, capped at $50,000 and 80% of actual lost gross income","$2,500 in funeral expense benefits"],
+    correct:"$50,000 in accidental death benefits",
+    explain:"Accidental death benefits under additional PIP cap out at $25,000, not $50,000 — that's the trap in this one. The other figures are correct as listed: at least $100,000 in medical, income loss up to $2,500/month capped at $50,000, and $2,500 in funeral expenses.",
+    hint:"One of these four numbers has been inflated on purpose. Medical, funeral, and income loss are all correct as written — the accidental death figure is the one that's wrong." },
+  { id:'ws15', cat:'PAIP (PA Auto Insurance Plan)',
+    q:"One of these statements about the Pennsylvania Auto Insurance Plan (PAIP) is false. Which one?",
+    options:["Agents enrolled in PAIP can bind coverage using any method allowed in the standard market","PA requires all admitted auto insurers to participate in PAIP, offering coverage to people who can't get it in the standard market","PAIP's coverages mirror the standard market — BI, UM, UIM, PIP, Collision, and Comprehensive","PAIP exists to provide a facility for auto coverage for people who can't buy it in the standard market"],
+    correct:"Agents enrolled in PAIP can bind coverage using any method allowed in the standard market",
+    explain:"PAIP is more restrictive than the standard market — agents can't just bind coverage on the spot the way they might elsewhere. Binding is only allowed through the specific electronic mail binding procedure the law lays out, not 'any means allowed.'",
+    hint:"PAIP exists specifically BECAUSE the standard market wouldn't take these risks. Ask yourself whether that context makes it more likely PAIP is looser or stricter about how coverage gets bound." },
+  { id:'ws16', cat:'UM/UIM Rules',
+    q:"Which statement about UM and UIM coverage is the incorrect one?",
+    options:["UM/UIM benefits can't be reduced or excluded because of workers' comp benefits paid for the same injury","UM and UIM are separate coverages, and each one can be rejected on its own","UM and UIM must be offered to the named insured, but can be rejected in writing","Stacking of UM and UIM benefits isn't allowed in Pennsylvania"],
+    correct:"Stacking of UM and UIM benefits isn't allowed in Pennsylvania",
+    explain:"This one's actually backwards — stacking IS permitted in PA, though it can be waived. UM and UIM are separate, independent coverages that can each be rejected on their own, and workers' comp benefits can't be used to cancel out UM/UIM payouts.",
+    hint:"Read for what's actually FALSE here, not what sounds like a strict, safe-sounding rule. The one that sounds the most like a restriction is exactly the one to be suspicious of." },
+  { id:'ws17', cat:"Workers' Comp — Total Disability Threshold",
+    q:"An injured employee has received total disability compensation for 104 weeks and is sent for a medical exam to check impairment level. What medical rating is needed, at minimum, to keep the total disability classification?",
+    options:["50%","60%","35%","40%"],
+    correct:"35%",
+    explain:"The 104-week mark is the checkpoint — after that, continuing to receive total disability compensation requires a medical rating of at least 35%. Fall below that threshold and the classification shifts away from total disability.",
+    hint:"104 weeks is the checkpoint, and the threshold number isn't a clean round figure like 50%. Remember it as an odd, specific number — that's usually how you'll recognize the real one." },
+  { id:'ws18', cat:'Insurance License Requirements',
+    q:"All but one of these are real requirements for getting an insurance license. Which one is NOT actually required?",
+    options:["Being at least 21 years old","Having passed or being exempt from the producer licensing exam","Having no violations of the state's insurance laws","Having completed pre-exam education requirements"],
+    correct:"Being at least 21 years old",
+    explain:"There's no specific age-21 requirement written into licensing law — that's the one that doesn't belong. The real requirements are passing or being exempt from the licensing exam, a clean record with no state insurance law violations, and completing pre-exam education.",
+    hint:"Three of these are legitimate gatekeeping requirements you'd expect for any professional license. One of them is a number that just doesn't actually appear in the licensing law at all." },
+  { id:'ws19', cat:'Non-Resident Licensing',
+    q:"An out-of-state resident wants a license to sell insurance in Pennsylvania. Which statement about their situation is true?",
+    options:["Since they live in another state, they can apply for a non-resident license","They just need to submit a completed application identifying the lines of authority they want to be licensed under","Since they're not a PA resident, they can't apply for a license at all","They're exempt from relicensing requirements but still have to pass the licensing exam"],
+    correct:"Since they live in another state, they can apply for a non-resident license",
+    explain:"Being a non-PA resident doesn't block you from selling insurance here — it just routes you through the non-resident licensing path instead of the resident one. Residency somewhere else is a different road, not a roadblock.",
+    hint:"Non-resident doesn't mean 'no license' — it means a different license PATH. If an answer implies PA residency is required to get licensed at all, that's your signal it's wrong." },
+
+  /* ---- Added from the Aug 18 2026 150-question exam simulator (Q108-Q151) ---- */
+  { id:'ws20', cat:'Coverage B — Other Structures',
+    q:"The insureds have an HO-3 policy with a Coverage A – Dwelling limit of $150,000. Their detached garage, destroyed by a covered peril, will cost $17,000 to replace. How much will the HO policy pay?",
+    options:["$15,000","80% of the loss because of the co-insurance requirement","$17,000","$150,000"],
+    correct:"$15,000",
+    explain:"Coverage B (other structures) pays automatically at 10% of Coverage A on an HO-3 — no separate limit needs to be purchased. Here that's 10% of $150,000 = $15,000, even though the garage would actually cost $17,000 to rebuild. Co-insurance doesn't factor into this calculation at all.",
+    hint:"Don't reach for co-insurance math here — this is a flat percentage-of-Coverage-A calculation. Other structures always run at 10% of the dwelling limit on an HO-3 unless a separate limit was purchased." },
+  { id:'ws21', cat:'Umbrella vs. CGL',
+    q:"An insured wants coverage that kicks in once her personal liability limits are exhausted. What should her agent recommend?",
+    options:["A comprehensive personal liability policy","A commercial general liability policy","A contractual excess policy","An umbrella liability policy"],
+    correct:"An umbrella liability policy",
+    explain:"An umbrella is built specifically to sit excess over a primary personal liability policy once it's exhausted. A CGL is a commercial liability product — it has nothing to do with personal exposures, no matter how large.",
+    hint:"The word 'personal' in the question should rule out anything with 'commercial' in its name. You're looking for the product built to sit on top of a personal liability limit, not replace it." },
+  { id:'ws22', cat:'Fiduciary Liability',
+    q:"Fiduciary liability coverage would be purchased by all of the following EXCEPT:",
+    options:["Money managers directing accounts under ERISA guidelines","Banks","Coin collector shops","Employers sponsoring 401(k) plans subject to ERISA guidelines"],
+    correct:"Coin collector shops",
+    explain:"Fiduciary liability protects entities that manage or administer someone else's money — ERISA-governed retirement accounts, trust departments, plan sponsors. A coin collector shop doesn't manage anyone else's funds in that fiduciary sense; what it actually needs is crime insurance to protect its own inventory.",
+    hint:"Ask whether the business is managing OTHER PEOPLE'S money as a fiduciary duty, or just holding its own inventory. Only one of these four options isn't managing someone else's assets." },
+  { id:'ws23', cat:'Co-insurance — Minimum Face Amount',
+    q:"The insured's home has a replacement cost of $150,000. To have replacement cost coverage for partial losses to the dwelling, the HO policy must be written with a face amount equal to or greater than:",
+    options:["$100,000","$75,000","$150,000","$120,000"],
+    correct:"$120,000",
+    explain:"The 80% co-insurance requirement means the insured must carry at least 80% of replacement cost to get full replacement cost settlement on a partial loss. $150,000 × 80% = $120,000 — that's the minimum face amount needed, not the full replacement cost itself.",
+    hint:"This is a straight 80% calculation off the replacement cost figure given in the question. Multiply the replacement cost by 0.80 before you look at the answer choices." },
+  { id:'ws24', cat:'Construction Types & Fire Resistance',
+    q:"Which of the following construction types is the LEAST fire resistive?",
+    options:["Non-combustible","Frame","Brick","Fire resistive"],
+    correct:"Frame",
+    explain:"Frame construction catches fire and burns faster than non-combustible, brick (masonry), or fire-resistive construction — it's built from combustible wood materials. The other three are all designed specifically to resist or not contribute to fire spread.",
+    hint:"Think about what each material is actually made of. Wood burns; the other three options are built from materials chosen specifically because they don't." },
+  { id:'ws25', cat:'CGL Aggregate Limit',
+    q:"The aggregate limit on the Commercial General Liability (CGL) policy is the:",
+    options:["Minimum payout under the policy for any one occurrence","Minimum payout for the entire policy period","Maximum payout under the policy for any one occurrence","Maximum payout for the entire policy period"],
+    correct:"Maximum payout for the entire policy period",
+    explain:"Aggregate means 'total' — it's the ceiling on everything the insurer will pay across the whole policy period, not a per-occurrence figure and definitely not a minimum. Minimums don't exist in this context at all.",
+    hint:"The word 'aggregate' should immediately signal 'total across the whole period,' not 'per incident.' Also rule out both 'minimum' options right away — insurers don't guarantee minimum payouts." },
+  { id:'ws26', cat:'Consent-to-Settle Clause',
+    q:"A type of liability contract in which the consent of an insured is needed before an insurer may settle a claim is a(n):",
+    options:["Professional liability","Employee benefits liability","Environmental impairment liability","Commercial umbrella liability"],
+    correct:"Professional liability",
+    explain:"In professional liability — malpractice, E&O — a settlement can itself damage the insured's professional reputation, so the carrier needs the insured's permission before settling. That consent-to-settle clause is a defining feature of professional liability specifically, not general commercial coverages.",
+    hint:"Think about which of these four coverages involves a professional's reputation being on the line. That's the one where the insured gets a say before the carrier can settle." },
+  { id:'ws27', cat:'Replacement Cost — DP Forms',
+    q:"Replacement cost coverage for dwellings is available under which of the following Dwelling Property (DP) forms?",
+    options:["Only broad and special forms","Only basic and broad forms","Only special dwelling forms","All dwelling policy forms"],
+    correct:"Only broad and special forms",
+    explain:"The DP-1 (basic form) always settles building losses at Actual Cash Value — replacement cost isn't an option on it. Replacement cost is available on the DP-2 (broad) and DP-3 (special), as long as the building is insured to the correct percentage.",
+    hint:"Remember that the DP-1/basic form is the odd one out for loss settlement — it's ACV only, always. The other two forms both offer replacement cost." },
+  { id:'ws28', cat:'BOP — Debris Removal vs. Pollution',
+    q:"Which of the following is covered under a standard Businessowners Policy (BOP)?",
+    options:["Smoke, vapor, or gas","Pollution cleanup ordered by the federal government","Debris removal","Wear and tear"],
+    correct:"Debris removal",
+    explain:"Debris removal is a standard additional coverage on a BOP. Pollution cleanup is covered on a limited basis under the BOP, but specifically NOT when it's ordered by the federal government — that carve-out is the trap in this question. Wear and tear, and pollution-causing substances like smoke/vapor/gas, are general exclusions.",
+    hint:"Pollution cleanup is covered on a BOP in some circumstances — but watch for the word 'federal.' That specific trigger is excluded even though pollution cleanup in general has limited coverage." },
+  { id:'ws29', cat:'HO Excluded Perils',
+    q:"What is typically an excluded peril under a Homeowners (HO) Policy?",
+    options:["Lightning","Smoke","Nuclear contamination","Civil commotion"],
+    correct:"Nuclear contamination",
+    explain:"Nuclear contamination is excluded across all property policies because of its catastrophic, uninsurable nature — no property insurer wants that exposure. Lightning, smoke, and civil commotion are all named perils that ARE typically covered.",
+    hint:"Three of these four are everyday covered perils you'd expect any homeowner to face. One of them is a catastrophic exposure no property insurer will touch — that's the excluded one." },
+  { id:'ws30', cat:'Adverse Selection',
+    q:"Adverse selection is best characterized by what phrase?",
+    options:["Selection against the company","Selection against an individual","Making no selection at all","Selection against both the company and the individual"],
+    correct:"Selection against the company",
+    explain:"Adverse selection happens when applicants with a greater-than-average chance of loss seek out insurance — the risk selects the insurer, working against the company's interests. That's exactly why underwriting exists: to screen these applicants out with sound criteria.",
+    hint:"Think about who's doing the 'selecting' and who it hurts. The applicant is choosing to buy in specifically because they're a worse-than-average risk — and that selection works against the insurer." },
+  { id:'ws31', cat:'Pure Risk vs. Moral Risk',
+    q:"A risk that involves only the possibility of a loss is known as a(n):",
+    options:["Speculative risk","Moral risk","Pure risk","Physical risk"],
+    correct:"Pure risk",
+    explain:"Pure risk only has a downside — loss or no loss, with no chance of gain — and that's the only kind of risk a company will actually insure. Speculative risk includes a chance of gain (like investing). Moral and physical risk aren't risk categories at all; they're types of hazards.",
+    hint:"Insurance companies only insure risks with no upside. If there's zero chance of coming out ahead — only loss or no loss — that's your answer category." },
+  { id:'ws32', cat:'DP Basic Cause of Loss Form',
+    q:"A Dwelling Property (DP) Policy written on a Basic Cause of Loss form provides coverage to an insured in what instance?",
+    options:["Loss of silverware by theft","Damage to business property by fire","Damage caused by internal explosion","Loss, by windstorm, of boats located within the building line"],
+    correct:"Damage caused by internal explosion",
+    explain:"The unendorsed DP Basic form provides named-peril coverage, and explosion is one of those named perils. Theft of silverware, business property, and boats are all things the Basic form specifically doesn't reach without an endorsement.",
+    hint:"The Basic Cause of Loss form is a short, specific list of named perils — think fire, lightning, explosion, and similar. If an answer choice involves theft, business property, or watercraft, it's probably outside that list." },
+  { id:'ws33', cat:'Boatowners Policy Scope',
+    q:"The Boatowners policy provides coverage for:",
+    options:["Smaller boats on inland lakes only","The hull and equipment only","The hull, equipment, and watercraft liability","The hull itself, but never miscellaneous equipment"],
+    correct:"The hull, equipment, and watercraft liability",
+    explain:"A Boatowners policy is a package product — it covers physical damage to the hull and equipment AND the liability exposure from operating the watercraft, all in one policy. Limiting it to just hull damage or just equipment misses the liability piece entirely.",
+    hint:"Think of a Boatowners policy the way you'd think of a homeowners policy — it bundles physical damage coverage with liability coverage, not just one or the other." },
+  { id:'ws34', cat:"Insurer's Claim Settlement Rights",
+    q:"In regards to the insurer's rights when settling a claim, the insurer may:",
+    options:["Delay paying the claim until the insured agrees to accept the offer","Only repair with like kind","Pay the claim, repair the property, or replace the damaged property","Call a meeting of real estate appraisers to determine the value"],
+    correct:"Pay the claim, repair the property, or replace the damaged property",
+    explain:"The insurer has three options and gets to pick whichever works best for them — pay the cash value, repair the damage, or replace the property outright. It's not restricted to just repairing with like kind, regardless of what the policyholder might prefer.",
+    hint:"This question is really asking how many settlement options the insurer has, not just one. Look for the answer that names all three: pay, repair, replace." },
+  { id:'ws35', cat:'Appraisal Clause Mechanics',
+    q:"What is NOT true about the appraisal clause?",
+    options:["Cost of the appraisal is levied against the party who lost","Appraisers will hire a third-party umpire to help decide the issue","Cost of the appraiser is paid by each party who requests it","When any two of the three parties agree, their decision is binding on both the insured and the insurer"],
+    correct:"Cost of the appraisal is levied against the party who lost",
+    explain:"There's no 'losing party pays' rule in an appraisal clause — each side pays for its own appraiser, and the cost of the neutral umpire gets split between them. The rest is accurate: each party hires their own appraiser, those two appraisers select an umpire, and any two of the three agreeing makes the decision binding.",
+    hint:"Appraisal costs are split by design, regardless of outcome — there's no 'winner' or 'loser' who ends up footing the whole bill. That's what makes this statement false." },
+  { id:'ws36', cat:'Arbitration — Liability Claims',
+    q:"In a liability insurance policy, if the insured and insurer cannot agree on a claim, a provision is provided called:",
+    options:["Arbitration","Entitlement on a claim","Rights of the insured","Claim discussion"],
+    correct:"Arbitration",
+    explain:"When the insured and insurer disagree on a liability claim, arbitration is the built-in resolution process: each side picks an arbitrator, and those two pick a neutral third. Agreement by any two of those three is binding on both parties.",
+    hint:"This is the liability-claim equivalent of the appraisal clause in property insurance — a built-in dispute process that avoids going straight to court. The name for it here is a specific legal term." },
+  { id:'ws37', cat:'Claims-Made Forms',
+    q:"A claims made policy form would be best exemplified by the:",
+    options:["Personal auto policy","Building and business personal property form","Businessowners policy (BOP)","Doctor's professional liability policy"],
+    correct:"Doctor's professional liability policy",
+    explain:"Professional liability policies — like medical malpractice and errors & omissions — are almost always written on a claims-made form, since the risk of a delayed claim (a lawsuit filed years after treatment) is so high. Property forms like BPP and BOP are written on an occurrence basis instead.",
+    hint:"Claims-made forms show up specifically where claims can surface years after the actual incident — think professional malpractice, not property damage." },
+  { id:'ws38', cat:'ACV vs. Cost New Settlement',
+    q:"After a covered loss, the insurer may do all of the following EXCEPT:",
+    options:["Make an Actual Cash Value settlement","Repair with like kind and quality","Replace the damaged property with new","Pay the difference between the cost new and the actual cash value"],
+    correct:"Pay the difference between the cost new and the actual cash value",
+    explain:"The insurer's job is to make the insured whole again — not better off. Paying just the ACV-to-cost-new difference (instead of a full settlement) would actually leave the insured ahead, which isn't allowed. ACV settlement, repair, or full replacement are all legitimate options.",
+    hint:"Ask which of these four options would leave the insured BETTER off than before the loss, not just made whole. That's the one the insurer can't do." },
+  { id:'ws39', cat:"Workers' Comp — No-Fault Basis",
+    q:"The Workers' Compensation policy covers employees' work-related injuries:",
+    options:["Only if the employer was at fault","Only if the injury occurred away from the workplace","Regardless of whether the employer was at fault","Only if another employee caused the injury"],
+    correct:"Regardless of whether the employer was at fault",
+    explain:"Workers' Comp is a no-fault, immediate remedy — the employee gives up the right to sue the employer in exchange for prompt, guaranteed payment on a work-related injury. There's no need to prove employer negligence to collect.",
+    hint:"Workers' Comp exists as a trade-off: the employee gives up the right to sue in exchange for fault not mattering at all. If an answer choice requires proving fault, it's wrong." },
+  { id:'ws40', cat:"Workers' Comp — Compensable Injury",
+    q:"What injury would qualify as a compensable injury under Workers' Compensation laws?",
+    options:["Secretary is involved in an automobile accident while on her way to work","Hotel maid falls down the stairs while cleaning her own home","Secretary accidentally swallows her gum in the company lunchroom and chokes when it gets lodged in her windpipe","Factory worker fractures her arm while working overtime on the assembly line"],
+    correct:"Factory worker fractures her arm while working overtime on the assembly line",
+    explain:"Workers' Comp only covers injuries arising out of and in the course of employment — meaning the job itself has to be a factor in the injury. The factory worker's injury happened while actually performing job duties. Commuting accidents, injuries at home, and freak accidents unrelated to the job (like choking on gum) don't meet that bar.",
+    hint:"The test is whether the injury happened BECAUSE of job duties, not just during work hours or on work property. Only one of these four scenarios ties the injury directly to performing the actual job." }
+];
+
+/* ---------- Sections — groups the 40 weak spots into 8 topic areas ---------- */
+const SECTIONS = [
+  { id:'licensing', icon:'📋', title:'Licensing & Producer Conduct',
+    intro:"This first stretch is about what it actually takes to get and keep a producer license in PA — the real requirements, the self-reporting duties, and the lines you can't cross around referral fees and rebates.",
+    ids:['ws01','ws02','ws18','ws19','ws07','ws08'] },
+  { id:'regulatory', icon:'⚖️', title:"Commissioner's Regulatory Authority",
+    intro:"Next up: what the Insurance Commissioner can and can't actually do when a producer breaks the rules — fines, Cease and Desist orders, unfair practices, and where that administrative power runs out.",
+    ids:['ws03','ws04','ws05','ws06','ws09'] },
+  { id:'property', icon:'🏠', title:'Property Insurance',
+    intro:"A shorter section — how commercial property policies can be cancelled or nonrenewed, and what the Standard Fire Policy actually does and doesn't cover.",
+    ids:['ws10','ws11'] },
+  { id:'auto', icon:'🚗', title:'Auto Insurance',
+    intro:"PA auto law has its own quirks — tort option notice periods, PIP timing and dollar caps, the state's assigned-risk plan, and how UM/UIM coverage actually works.",
+    ids:['ws12','ws13','ws14','ws15','ws16'] },
+  { id:'workcomp', icon:'🩹', title:"Workers' Compensation",
+    intro:"Just one here, but it's a real trap — the disability rating threshold that decides whether someone keeps their total disability classification after 104 weeks.",
+    ids:['ws17'] },
+  { id:'propcov', icon:'🏡', title:'Property Coverage Concepts',
+    intro:"Fresh misses from the 150-question exam simulator: co-insurance math, other-structures percentages, DP form quirks, and the excluded perils that trip people up.",
+    ids:['ws20','ws23','ws24','ws27','ws29','ws32'] },
+  { id:'liabcomm', icon:'🏢', title:'Liability & Commercial Lines',
+    intro:"Umbrella vs. CGL, fiduciary vs. crime coverage, aggregate limits, consent-to-settle, BOP quirks, boatowners, and workers\u2019 comp basics — the commercial-side traps.",
+    ids:['ws21','ws22','ws25','ws26','ws28','ws33','ws37','ws39','ws40'] },
+  { id:'claimsgen', icon:'📑', title:'Claims Handling & General Principles',
+    intro:"The definitional traps: pure risk, adverse selection, what an insurer can and can\u2019t do at settlement, and how appraisal and arbitration clauses actually work.",
+    ids:['ws30','ws31','ws34','ws35','ws36','ws38'] }
+];
+function buildSectionWalk(){
+  const walk=[];
+  SECTIONS.forEach(sec=>{
+    const items=shuffleArr(WEAK_SPOTS.filter(w=>sec.ids.includes(w.id)));
+    walk.push({type:'intro', section:sec});
+    items.forEach(w=>walk.push({type:'question', section:sec, spot:w}));
+  });
+  return walk;
+}
+function walkQuestionCount(walk){ return walk.filter(s=>s.type==='question').length; }
+function walkQuestionsSeenBefore(walk,idx){ return walk.slice(0,idx).filter(s=>s.type==='question').length; }
+
+let weakMastered = {};
+let weakMissCount = {};
+WEAK_SPOTS.forEach(w=>{ if(w.missSeed) weakMissCount[w.id]=w.missSeed; });
+
+/* ============================================================
+   SAVE / LOAD
+   ============================================================ */
+const SAVE_KEY='studyGrove_pcLaw_v1';
+let ambientOn=false, sfxOn=true, voiceOn=true;
+function loadState(){
+  try{
+    const raw=localStorage.getItem(SAVE_KEY);
+    if(raw){
+      const d=JSON.parse(raw);
+      weakMastered=d.weakMastered||{};
+      const savedMiss=d.weakMissCount||{};
+      Object.keys(savedMiss).forEach(k=>{ weakMissCount[k]=savedMiss[k]; });
+      ambientOn=!!d.ambientOn;
+      sfxOn=d.sfxOn!==false;
+      voiceOn=d.voiceOn!==false;
+    }
+  }catch(e){}
+}
+function saveState(){
+  try{ localStorage.setItem(SAVE_KEY, JSON.stringify({weakMastered,weakMissCount,ambientOn,sfxOn,voiceOn})); }catch(e){}
+}
+
+/* ============================================================
+   SOUND ENGINE — soft "leaf" clicks + calming ambient nature pad
+   ============================================================ */
+let __ctx=null;
+function __getCtx(){
+  if(!__ctx){ try{ __ctx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; } }
+  if(__ctx.state==='suspended'){ try{__ctx.resume();}catch(e){} }
+  return __ctx;
+}
+function __tone(freq,delay,dur,type,vol,cutoff){
+  const ctx=__getCtx(); if(!ctx) return;
+  try{
+    const o=ctx.createOscillator(); const f=ctx.createBiquadFilter(); const g=ctx.createGain();
+    o.type=type||'sine'; o.frequency.value=freq;
+    f.type='lowpass'; f.frequency.value=cutoff||2600; f.Q.value=0.5;
+    o.connect(f); f.connect(g); g.connect(ctx.destination);
+    const t0=ctx.currentTime+(delay||0);
+    g.gain.setValueAtTime(0,t0);
+    g.gain.linearRampToValueAtTime(vol||0.1,t0+0.02);
+    g.gain.exponentialRampToValueAtTime(0.001,t0+(dur||0.15));
+    o.start(t0); o.stop(t0+(dur||0.15)+0.03);
+  }catch(e){}
+}
+function soundClick(){
+  if(!sfxOn) return;
+  const base=520+Math.random()*70;
+  __tone(base,0,0.11,'sine',0.06,1800);
+  __tone(base*1.5,0.02,0.14,'sine',0.03,1600);
+}
+function soundCorrect(){
+  if(!sfxOn) return;
+  __tone(587.33,0,0.16,'sine',0.08,2600);
+  __tone(783.99,0.08,0.22,'sine',0.07,2600);
+}
+function soundWrong(){
+  if(!sfxOn) return;
+  __tone(220,0,0.2,'sine',0.06,1200);
+  __tone(196,0.06,0.24,'sine',0.05,1000);
+}
+document.addEventListener('click',function(e){
+  if(e.target.closest('button')) soundClick();
+},true);
+
+let ambientTimer=null;
+const AMBIENT_SCALE=[220.00,246.94,261.63,293.66,329.63,392.00,440.00]; // A minor pentatonic-ish, calm
+function ambientLoop(){
+  if(!ambientOn){ ambientTimer=null; return; }
+  const freq=AMBIENT_SCALE[Math.floor(Math.random()*AMBIENT_SCALE.length)];
+  __tone(freq,0,2.4+Math.random()*1.4,'sine',0.02,1400);
+  __tone(freq*2,0.3,2.0,'sine',0.008,1800);
+  if(Math.random()<0.15) __tone(freq*3,0.6+Math.random()*0.4,0.6,'sine',0.012,3000); // occasional high "chime"
+  ambientTimer=setTimeout(ambientLoop, 2600+Math.random()*1800);
+}
+function startAmbient(){ if(ambientTimer) return; ambientLoop(); }
+function stopAmbient(){ clearTimeout(ambientTimer); ambientTimer=null; }
+function toggleAmbient(){
+  ambientOn=!ambientOn;
+  document.getElementById('ambientBtn').classList.toggle('is-off',!ambientOn);
+  if(ambientOn) startAmbient(); else stopAmbient();
+  saveState();
+}
+function toggleSfx(){
+  sfxOn=!sfxOn;
+  document.getElementById('sfxBtn').classList.toggle('is-off',!sfxOn);
+  saveState();
+  if(sfxOn) soundClick();
+}
+function toggleVoice(){
+  voiceOn=!voiceOn;
+  document.getElementById('voiceBtn').classList.toggle('is-off',!voiceOn);
+  if(!voiceOn && window.speechSynthesis) window.speechSynthesis.cancel();
+  saveState();
+}
+
+/* ============================================================
+   SHARED HELPERS
+   ============================================================ */
+function shuffleArr(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function randomLine(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function speakText(text){
+  if(!voiceOn || !window.speechSynthesis) return;
+  try{
+    window.speechSynthesis.cancel();
+    const utter=new SpeechSynthesisUtterance(text);
+    utter.rate=0.98;
+    window.speechSynthesis.speak(utter);
+  }catch(e){}
+}
+function recordMiss(id){ weakMissCount[id]=(weakMissCount[id]||0)+1; delete weakMastered[id]; saveState(); bumpHeat(+0.24); }
+function recordHit(id){ weakMastered[id]=true; saveState(); bumpHeat(-0.32); }
+
+/* ---------- Grove heat: background turns fiery on misses, calms on correct answers ---------- */
+let groveHeat=0;
+function bumpHeat(delta){
+  groveHeat=Math.max(0,Math.min(1,groveHeat+delta));
+  document.documentElement.style.setProperty('--heat', groveHeat.toFixed(3));
+  const body=document.body;
+  body.classList.remove('heat-warm','heat-hot','heat-inferno');
+  if(groveHeat>=0.82) body.classList.add('heat-inferno');
+  else if(groveHeat>=0.5) body.classList.add('heat-hot');
+  else if(groveHeat>=0.22) body.classList.add('heat-warm');
+}
+function getTroubleSpots(){
+  return WEAK_SPOTS.filter(w=>(weakMissCount[w.id]||0)>0).sort((a,b)=>(weakMissCount[b.id]||0)-(weakMissCount[a.id]||0));
+}
+function updateGroveProgress(){
+  const done=WEAK_SPOTS.filter(w=>weakMastered[w.id]).length;
+  const pct=Math.round(done/WEAK_SPOTS.length*100);
+  document.getElementById('groveFill').style.width=pct+'%';
+  document.getElementById('grovePct').textContent=pct+'% mastered ('+done+'/'+WEAK_SPOTS.length+')';
+}
+function renderTroublePanel(){
+  const body=document.getElementById('troublePanelBody');
+  const actions=document.getElementById('tpActions');
+  const trouble=getTroubleSpots();
+  if(!trouble.length){
+    body.innerHTML='<span class="tp-empty">Nothing flagged twice yet — once something trips you up more than once across any mode, it\'ll show up here.</span>';
+    actions.style.display='none';
+    return;
+  }
+  const ul=document.createElement('ul');
+  ul.className='trouble-list';
+  trouble.slice(0,8).forEach(w=>{
+    const li=document.createElement('li');
+    li.innerHTML='<span>'+w.cat+'</span><span class="tp-count">missed '+weakMissCount[w.id]+'×</span>';
+    ul.appendChild(li);
+  });
+  body.innerHTML=''; body.appendChild(ul);
+  actions.style.display='flex';
+}
+function openReviewNotes(){
+  hideAllStages();
+  document.getElementById('reviewStage').classList.add('active');
+  const trouble=getTroubleSpots();
+  const listEl=document.getElementById('reviewList');
+  if(!trouble.length){
+    listEl.innerHTML='<span class="tp-empty">Nothing flagged yet — miss something twice in any mode and it\'ll show up here with the full question and explanation.</span>';
+    return;
+  }
+  listEl.innerHTML='';
+  trouble.forEach(w=>{
+    const item=document.createElement('div');
+    item.className='review-item';
+    item.innerHTML=
+      '<div class="review-item-head"><span class="review-item-cat">'+w.cat+'</span><span class="review-item-count">missed '+weakMissCount[w.id]+'×</span></div>'+
+      '<div class="review-item-q">'+w.q+'</div>'+
+      '<div class="review-item-a"><b>'+w.correct+'</b><br><br>'+w.explain+'</div>';
+    listEl.appendChild(item);
+  });
+}
+function buildReviewText(){
+  const trouble=getTroubleSpots();
+  if(!trouble.length) return null;
+  const lines=['STUDY GROVE — REVIEW NOTES','Missed more than once, as of '+new Date().toLocaleDateString(),'='.repeat(50),''];
+  trouble.forEach((w,i)=>{
+    lines.push((i+1)+'. ['+w.cat+'] — missed '+weakMissCount[w.id]+'×');
+    lines.push('Q: '+w.q);
+    lines.push('Options: '+w.options.join(' | '));
+    lines.push('Correct answer: '+w.correct);
+    lines.push('Why: '+w.explain);
+    lines.push('');
+  });
+  return lines.join('\n');
+}
+function downloadReviewNotes(){
+  const text=buildReviewText();
+  if(!text){ alert('Nothing flagged yet — miss something twice in any mode and it\'ll show up here to download.'); return; }
+  const blob=new Blob([text],{type:'text/plain'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download='study-grove-review-notes.txt';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  soundClick();
+}
+function hideAllStages(){
+  document.querySelectorAll('.stage').forEach(s=>s.classList.remove('active'));
+}
+function goHome(){
+  hideAllStages();
+  document.getElementById('homeStage').classList.add('active');
+  updateGroveProgress();
+  renderTroublePanel();
+}
+
+/* ============================================================
+   FLASHCARD MODE
+   ============================================================ */
+/* ============================================================
+   FLASHCARD MODE — walks section by section, with an intro before each
+   ============================================================ */
+let flashWalk=[], flashStepIdx=0, flashFlipped=false;
+function openFlashcards(){
+  hideAllStages();
+  document.getElementById('flashStage').classList.add('active');
+  flashWalk=buildSectionWalk();
+  flashStepIdx=0;
+  renderFlashStep();
+}
+function renderFlashSectionDots(){
+  const dotsEl=document.getElementById('flashSectionDots');
+  const currentSecId = flashWalk[flashStepIdx] ? flashWalk[flashStepIdx].section.id : null;
+  dotsEl.innerHTML = SECTIONS.map(s=>{
+    const cls = s.id===currentSecId ? 'current' : '';
+    return '<span class="spd-dot '+cls+'"></span>';
+  }).join('');
+}
+function renderFlashStep(){
+  if(flashStepIdx>=flashWalk.length){
+    showComplete('🌳','Grove complete!','You made it through all '+SECTIONS.length+' sections and all '+WEAK_SPOTS.length+' cards. Run it again — both the section questions and the overall pacing reshuffle, so it stays real recall practice.');
+    return;
+  }
+  renderFlashSectionDots();
+  const step=flashWalk[flashStepIdx];
+  if(step.type==='intro'){
+    document.getElementById('flashIntroWrap').style.display='block';
+    document.getElementById('flashCardWrap').style.display='none';
+    document.getElementById('flashIntroIcon').textContent=step.section.icon;
+    document.getElementById('flashIntroTitle').textContent=step.section.title;
+    document.getElementById('flashIntroText').textContent=step.section.intro;
+    document.getElementById('flashCounter').textContent=step.section.title;
+    speakText(step.section.title+'. '+step.section.intro);
+    return;
+  }
+  document.getElementById('flashIntroWrap').style.display='none';
+  document.getElementById('flashCardWrap').style.display='block';
+  flashFlipped=false;
+  document.getElementById('flipCard').classList.remove('flipped');
+  const w=step.spot;
+  document.getElementById('flashCatFront').textContent=w.cat;
+  document.getElementById('flashCatBack').textContent=w.cat;
+  document.getElementById('flashQ').textContent=w.q;
+  document.getElementById('flashA').innerHTML='<b>'+w.correct+'</b><br><br>'+w.explain;
+  const seen=walkQuestionsSeenBefore(flashWalk,flashStepIdx)+1;
+  document.getElementById('flashCounter').textContent=seen+' / '+walkQuestionCount(flashWalk);
+  speakText(w.q);
+}
+function flashIntroContinue(){ soundClick(); flashStepIdx++; renderFlashStep(); }
+function flipCard(){
+  flashFlipped=!flashFlipped;
+  document.getElementById('flipCard').classList.toggle('flipped',flashFlipped);
+  if(flashFlipped){
+    const w=flashWalk[flashStepIdx].spot;
+    speakText('The answer is '+w.correct+'. '+w.explain);
+  }
+}
+function flashJudge(gotIt){
+  const w=flashWalk[flashStepIdx].spot;
+  if(gotIt){ recordHit(w.id); soundCorrect(); }
+  else{ recordMiss(w.id); soundWrong(); }
+  flashStepIdx++;
+  renderFlashStep();
+}
+
+/* ============================================================
+   QUIZ MODE
+   ============================================================ */
+let quizWalk=[], quizStepIdx=0, quizScore=0, quizAnswered=false, quizQuestionsAnswered=0;
+function openQuiz(){
+  hideAllStages();
+  document.getElementById('quizStage').classList.add('active');
+  quizWalk=buildSectionWalk();
+  quizStepIdx=0; quizScore=0; quizQuestionsAnswered=0;
+  renderQuiz();
+}
+function renderQuizSectionDots(){
+  const dotsEl=document.getElementById('quizSectionDots');
+  const currentSecId = quizWalk[quizStepIdx] ? quizWalk[quizStepIdx].section.id : null;
+  dotsEl.innerHTML = SECTIONS.map(s=>{
+    const cls = s.id===currentSecId ? 'current' : '';
+    return '<span class="spd-dot '+cls+'"></span>';
+  }).join('');
+}
+function renderQuiz(){
+  if(quizStepIdx>=quizWalk.length){
+    const total=walkQuestionCount(quizWalk);
+    const pct=Math.round(quizScore/total*100);
+    showComplete('🌻','Quiz round done!', quizScore+' / '+total+' correct ('+pct+'%). '+(pct>=85?"That's a strong grove — those aren't weak spots anymore.":"Run it again, reshuffled — keep leaning on the ones that trip you up."));
+    return;
+  }
+  renderQuizSectionDots();
+  const step=quizWalk[quizStepIdx];
+  if(step.type==='intro'){
+    document.getElementById('quizIntroWrap').style.display='block';
+    document.getElementById('quizQuestionWrap').style.display='none';
+    document.getElementById('quizIntroIcon').textContent=step.section.icon;
+    document.getElementById('quizIntroTitle').textContent=step.section.title;
+    document.getElementById('quizIntroText').textContent=step.section.intro;
+    speakText(step.section.title+'. '+step.section.intro);
+    return;
+  }
+  document.getElementById('quizIntroWrap').style.display='none';
+  document.getElementById('quizQuestionWrap').style.display='block';
+  quizAnswered=false;
+  document.getElementById('quizExplain').style.display='none';
+  document.getElementById('quizNextBtn').style.display='none';
+  document.getElementById('hintBox').style.display='none';
+  document.getElementById('hintBtn').style.display='inline-block';
+  document.getElementById('quizScoreLabel').textContent=quizScore+' / '+quizQuestionsAnswered+' correct';
+  document.getElementById('quizProgressFill').style.width=(walkQuestionsSeenBefore(quizWalk,quizStepIdx)/walkQuestionCount(quizWalk)*100)+'%';
+  const w=step.spot;
+  document.getElementById('quizCat').textContent=w.cat;
+  document.getElementById('quizQ').textContent=w.q;
+  document.getElementById('hintText').textContent=w.hint||'';
+  speakText(w.q);
+  const choicesEl=document.getElementById('quizChoices');
+  choicesEl.innerHTML='';
+  shuffleArr(w.options).forEach(opt=>{
+    const btn=document.createElement('button');
+    btn.className='quiz-choice-btn';
+    btn.textContent=opt;
+    btn.onclick=()=>answerQuiz(w,opt,btn);
+    choicesEl.appendChild(btn);
+  });
+}
+function quizIntroContinue(){ soundClick(); quizStepIdx++; renderQuiz(); }
+function toggleHint(){
+  const box=document.getElementById('hintBox');
+  const shown=box.style.display==='block';
+  box.style.display=shown?'none':'block';
+  if(!shown){
+    soundClick();
+    speakText(document.getElementById('hintText').textContent);
+  }
+}
+function answerQuiz(w,chosen,btnEl){
+  if(quizAnswered) return;
+  quizAnswered=true;
+  quizQuestionsAnswered++;
+  document.querySelectorAll('#quizChoices .quiz-choice-btn').forEach(b=>{
+    b.disabled=true;
+    if(b.textContent===w.correct) b.classList.add('correct');
+  });
+  const explainEl=document.getElementById('quizExplain');
+  explainEl.style.display='block';
+  if(chosen===w.correct){
+    quizScore++; recordHit(w.id); soundCorrect();
+    explainEl.className='quiz-explain correct';
+    explainEl.textContent='Correct. '+w.explain;
+  } else {
+    btnEl.classList.add('wrong'); recordMiss(w.id); soundWrong();
+    explainEl.className='quiz-explain wrong';
+    explainEl.textContent='Not quite — the answer is "'+w.correct+'." '+w.explain;
+  }
+  document.getElementById('quizScoreLabel').textContent=quizScore+' / '+quizQuestionsAnswered+' correct';
+  document.getElementById('quizNextBtn').style.display='block';
+  speakText(explainEl.textContent);
+}
+function nextQuiz(){ quizStepIdx++; renderQuiz(); }
+
+/* ============================================================
+   PODCAST MODE
+   ============================================================ */
+let podcastWalk=[], podcastStepIdx=0, podcastPlaying=false, podcastSpeed=1, podcastPhase='q';
+let podcastTimer=null, podcastStarted=false;
+const POD_OPENERS=[
+  "Alright, welcome to the grove. Let's walk through what's actually giving you trouble.",
+  "Okay, settle in — just you and the stuff you keep missing.",
+  "Let's get into it. No pressure, just talking through these one at a time.",
+];
+const POD_LEADS=["Alright, next one.","Okay, here's one.","Let's look at this one.","Next up.","Here's a good one to nail down."];
+const POD_LEADS_REPEAT=["This one's beaten you {n} times. Let's actually fix it right now.","Okay, this is a repeat — {n} misses so far. Pay attention here.","We've been here before, {n} times. Let's make this the last one."];
+const POD_TRANSITIONS=["Alright, here's the deal:","Okay, real talk —","So here's what's actually true:","Here's the thing:","Okay, breaking it down:"];
+const POD_OUTROS=["Alright, lock that one in. Moving on.","Got it? Good, next.","That should stick now. Let's keep going.","Onto the next one.","Good, let's keep the momentum."];
+
+function openPodcast(){
+  hideAllStages();
+  document.getElementById('podcastStage').classList.add('active');
+  const trouble=getTroubleSpots();
+  if(trouble.length){
+    podcastWalk=trouble.map(w=>({type:'question', section:{title:w.cat}, spot:w}));
+    document.getElementById('podcastTagEl').textContent='Trouble Spots Radio';
+  } else {
+    podcastWalk=buildSectionWalk();
+    document.getElementById('podcastTagEl').textContent='Full Grove, by section';
+  }
+  podcastStepIdx=0; podcastPlaying=false; podcastStarted=false; podcastPhase='q';
+  document.getElementById('podcastPlayBtn').textContent='▶';
+  document.getElementById('podcastArt').classList.remove('playing');
+  renderPodcastCard(false);
+}
+function stopPodcast(){
+  podcastPlaying=false;
+  clearTimeout(podcastTimer);
+  try{ window.speechSynthesis.cancel(); }catch(e){}
+}
+function renderPodcastCard(reveal){
+  const step=podcastWalk[podcastStepIdx];
+  const qTotal=walkQuestionCount(podcastWalk)||podcastWalk.length;
+  if(step.type==='intro'){
+    document.getElementById('podcastTitleEl').textContent=step.section.title;
+    document.getElementById('podcastSubEl').textContent='Section intro';
+    document.getElementById('podcastProgressFill').style.width=(walkQuestionsSeenBefore(podcastWalk,podcastStepIdx)/qTotal*100)+'%';
+    document.getElementById('podcastQText').textContent=step.section.title;
+    document.getElementById('podcastAText').textContent=step.section.intro;
+    document.getElementById('podcastTranscript').classList.add('revealed');
+    return;
+  }
+  const w=step.spot;
+  document.getElementById('podcastTitleEl').textContent=w.cat;
+  const n=weakMissCount[w.id]||0;
+  const seen=walkQuestionsSeenBefore(podcastWalk,podcastStepIdx)+1;
+  document.getElementById('podcastSubEl').textContent=seen+' / '+qTotal+(n?' · missed '+n+'×':'');
+  document.getElementById('podcastProgressFill').style.width=((seen-1)/qTotal*100)+'%';
+  document.getElementById('podcastQText').textContent=w.q;
+  document.getElementById('podcastAText').textContent=randomLine(POD_TRANSITIONS)+' it\'s "'+w.correct+'." '+w.explain;
+  document.getElementById('podcastTranscript').classList.toggle('revealed',reveal);
+}
+function podcastSpeak(){
+  const step=podcastWalk[podcastStepIdx];
+  if(!window.speechSynthesis){ podcastTimer=setTimeout(podcastAdvance,3000); return; }
+  window.speechSynthesis.cancel();
+  let text;
+  if(step.type==='intro'){
+    let opener='';
+    if(!podcastStarted){ opener=randomLine(POD_OPENERS)+' '; podcastStarted=true; }
+    text=opener+'New section: '+step.section.title+'. '+step.section.intro;
+  } else if(podcastPhase==='q'){
+    const w=step.spot;
+    const n=weakMissCount[w.id]||0;
+    let lead = (n>=2 && Math.random()<0.7) ? randomLine(POD_LEADS_REPEAT).replace('{n}',n) : randomLine(POD_LEADS);
+    let opener='';
+    if(!podcastStarted){ opener=randomLine(POD_OPENERS)+' '; podcastStarted=true; }
+    text=opener+lead+' '+w.q+' ... take a second.';
+  } else {
+    const w=step.spot;
+    text=randomLine(POD_TRANSITIONS)+' it\'s "'+w.correct+'." '+w.explain+' '+randomLine(POD_OUTROS);
+  }
+  const utter=new SpeechSynthesisUtterance(text);
+  utter.rate=0.98*podcastSpeed;
+  utter.onend=()=>{ if(podcastPlaying) podcastAdvance(); };
+  window.speechSynthesis.speak(utter);
+}
+function podcastAdvance(){
+  if(!podcastPlaying) return;
+  const step=podcastWalk[podcastStepIdx];
+  if(step.type==='intro'){
+    podcastStepIdx++;
+    if(podcastStepIdx>=podcastWalk.length){ finishPodcast(); return; }
+    podcastPhase='q';
+    renderPodcastCard(false);
+    podcastTimer=setTimeout(podcastSpeak,500);
+    return;
+  }
+  if(podcastPhase==='q'){
+    podcastPhase='a';
+    renderPodcastCard(true);
+    podcastTimer=setTimeout(podcastSpeak,650);
+  } else {
+    podcastPhase='q';
+    podcastStepIdx++;
+    if(podcastStepIdx>=podcastWalk.length){ finishPodcast(); return; }
+    renderPodcastCard(false);
+    podcastTimer=setTimeout(podcastSpeak,450);
+  }
+}
+function finishPodcast(){
+  podcastPlaying=false;
+  document.getElementById('podcastPlayBtn').textContent='▶';
+  document.getElementById('podcastArt').classList.remove('playing');
+  const qTotal=walkQuestionCount(podcastWalk)||podcastWalk.length;
+  showComplete('🎧','Episode complete!','You made it through '+qTotal+' weak spots hands-free. Head back and check the trouble panel to see what moved.');
+}
+function podcastToggle(){
+  podcastPlaying=!podcastPlaying;
+  document.getElementById('podcastPlayBtn').textContent=podcastPlaying?'⏸':'▶';
+  document.getElementById('podcastArt').classList.toggle('playing',podcastPlaying);
+  if(podcastPlaying) podcastSpeak();
+  else{ clearTimeout(podcastTimer); try{window.speechSynthesis.cancel();}catch(e){} }
+}
+function podcastNext(){
+  clearTimeout(podcastTimer); try{window.speechSynthesis.cancel();}catch(e){}
+  podcastPhase='q'; podcastStepIdx=Math.min(podcastStepIdx+1,podcastWalk.length-1);
+  renderPodcastCard(false);
+  if(podcastPlaying) podcastSpeak();
+}
+function podcastPrev(){
+  clearTimeout(podcastTimer); try{window.speechSynthesis.cancel();}catch(e){}
+  podcastPhase='q'; podcastStepIdx=Math.max(podcastStepIdx-1,0);
+  renderPodcastCard(false);
+  if(podcastPlaying) podcastSpeak();
+}
+function setPodcastSpeed(s){
+  podcastSpeed=s;
+  document.querySelectorAll('.speed-btn').forEach(b=>b.classList.toggle('active',parseFloat(b.dataset.speed)===s));
+  if(podcastPlaying){ clearTimeout(podcastTimer); podcastSpeak(); }
+}
+
+/* ============================================================
+   COMPLETE OVERLAY
+   ============================================================ */
+function showComplete(icon,title,sub){
+  document.getElementById('completeIcon').textContent=icon;
+  document.getElementById('completeTitle').textContent=title;
+  document.getElementById('completeSub').textContent=sub;
+  document.getElementById('completeOverlay').classList.add('open');
+  soundCorrect();
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+loadState();
+document.getElementById('ambientBtn').classList.toggle('is-off',!ambientOn);
+document.getElementById('sfxBtn').classList.toggle('is-off',!sfxOn);
+if(ambientOn) startAmbient();
+goHome();
+</script>
+</body>
+</html>
