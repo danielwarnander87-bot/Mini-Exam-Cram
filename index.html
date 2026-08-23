@@ -354,7 +354,7 @@
   <header>
     <span class="leaf-corner tl">🌿</span><span class="leaf-corner tr">🌿</span>
     <h1>Study Grove<span class="h1-sprout"> 🌱</span></h1>
-    <div class="subtitle">80 weak spots from your PA P&amp;C practice runs — through Aug 22, 2026. Pick a way through the grove.</div>
+    <div class="subtitle">102 weak spots from your PA P&amp;C practice runs — through Aug 23, 2026. Pick a way through the grove.</div>
   </header>
 
   <div class="topbar">
@@ -519,7 +519,7 @@
 
 <script>
 /* ============================================================
-   DATA — 80 weak spots from PA P&C practice runs (law + coverage)
+   DATA — 102 weak spots from PA P&C practice runs (law + coverage)
    (question #1/"Mary" appeared twice with reshuffled choices — both
    misses are folded into one card, seeded as an existing repeat miss)
    (ws41–ws60 added Aug 21 2026 review batch: BOP, CGL, BAP, DP, bonds,
@@ -527,6 +527,12 @@
    (ws61–ws80 added Aug 22 2026 review batch: crime forms, workers' comp
    waiting periods & Second Injury Fund, agency/authority, subrogation,
    farm property, co-insurance math, and general concepts)
+   (ws81–ws91 added Aug 23 2026 review batch: 150-question exam sim,
+   attempts 1-2 (28% -> 44%, need 85%). Ocean marine, HO/DP eligibility
+   and endorsements, mortgagee rights, split-limit math, FELA/Longshore)
+   (ws92–ws102 added Aug 23 2026, same exam sim, second batch: mysterious
+   disappearance, all-risk exclusions, HO Coverage C sublimits, boatowners,
+   DP-1 business-use exclusion, representations/waiver, co-insurance math)
    ============================================================ */
 const WEAK_SPOTS = [
   { id:'ws01', cat:'Producer Licensing — Manager/GA Fine', missSeed:2,
@@ -1013,9 +1019,143 @@ const WEAK_SPOTS = [
     correct:"Doctrine of No Benefit to a Bailee",
     explain:"A bailee is anyone with temporary custody of someone else's property — a dry cleaner holding Larry's shirts fits exactly. The Doctrine of No Benefit to a Bailee exists so that Larry's policy pays LARRY as the insured, not a third party who merely happened to have custody of the property when the loss occurred, even if that third party (the dry cleaner) is owed money separately.",
     hint:"Notice the dry cleaner is trying to get named on the check for an unrelated reason — an unpaid bill, not property damage they caused. The doctrine here is specifically about who has custody of property, not who's owed money." },
+
+  { id:'ws81', cat:'HO — Personal Liability Section',
+    q:"The Personal Liability section of a Homeowners (HO) Policy covers:",
+    options:["bodily injury to a resident caused by a neighbor's dog","bodily injury or property damage caused by war","bodily injury or property damage caused by the personal activities of an insured","damage to an insured's property caused by a visitor"],
+    correct:"bodily injury or property damage caused by the personal activities of an insured",
+    explain:"Personal Liability covers the insured's own negligence — situations that happen both on and off the premises because of something the insured did. It never covers injury TO the insured or damage TO the insured's own property, no matter the cause — liability coverage only responds when the insured is the one at fault toward someone else. And war is always excluded, full stop, across every line of insurance.",
+    hint:"Ask who caused the harm. Three of these four options describe harm happening TO the insured or their property, or an excluded peril (war) — only one describes the insured's own actions causing harm to someone else, which is what liability coverage actually insures." },
+  { id:'ws82', cat:'Ocean Marine — Implied Warranties',
+    q:"What implied warranty is NOT included in ocean marine coverage?",
+    options:["A shipper of cargo will only ship goods on a vessel flying the flag of the country of origin","The voyage is legal","The ship is seaworthy","The ship's course will not deviate"],
+    correct:"A shipper of cargo will only ship goods on a vessel flying the flag of the country of origin",
+    explain:"Ocean marine's implied warranties are about the voyage and vessel itself being legitimate and sound: the ship is seaworthy, the voyage is legal, and the ship won't deviate from its course. There's no implied warranty tied to a vessel's flag or country of origin — that's not part of the standard set of implied warranties at all.",
+    hint:"The three real implied warranties all describe the SHIP and the VOYAGE being sound and lawful. A flag/country-of-origin requirement doesn't fit that pattern — it's describing something about the shipper's choice of vessel, not the voyage's soundness." },
+  { id:'ws83', cat:'Claims — Duties After a Property Loss',
+    q:"When a property claim occurs which of the following is NOT required of the insured?",
+    options:["reporting the loss promptly","protecting the property from further damage","cooperating with the insurer","abandonment of the property"],
+    correct:"abandonment of the property",
+    explain:"Abandoning damaged property is strictly prohibited by policy provisions — the insured can't just walk away from it and expect the insurer to take it as-is. The insured DOES have to report the loss promptly, protect the property from further damage, and cooperate with the insurer's investigation — those three are all real, required duties after a loss.",
+    hint:"This is a NOT-required question, so the correct answer is the one duty that's actually PROHIBITED rather than required. Abandonment is the one option that runs backwards from what the other three describe." },
+  { id:'ws84', cat:'DP — Under Construction Endorsement',
+    q:"Gary has a Dwelling Under Construction endorsement on his Dwelling Property (DP) policy for the dwelling he is building. The endorsement requires him to:",
+    options:["insure the structure for at least 80% of its completed value","insure the structure for 100% of its completed value from inception","report the increased value of the structure to the insurer each week","report the completed value of the structure to the insurer upon completion"],
+    correct:"insure the structure for 100% of its completed value from inception",
+    explain:"To keep proper coverage in place throughout the entire build, the endorsement requires insuring at 100% of the structure's COMPLETED value right from the start — not 80%, and not something reported later. In exchange for insuring the full future value up front, the insurer gives Gary a premium discount for the period before the home is actually finished.",
+    hint:"This pairs with the DP construction question about the $0 minimum premium — together they describe the same mechanism: insure for the FULL completed value immediately, get a discount until the building is actually done, no weekly or completion-triggered reporting required." },
+  { id:'ws85', cat:'Property — Mortgagee Rights',
+    q:"A bank demanding to be listed as an insurable interest on a property policy is an example of:",
+    options:["additional insured interest","lender lien interest","mortgagee rights","mortgagor requirements"],
+    correct:"mortgagee rights",
+    explain:"When a bank holds the mortgage on a property, it has a real financial interest that needs protecting — this is specifically called mortgagee rights, a named provision protecting the mortgagee's (the bank's) interest in the property. \"Additional insured interest,\" \"lender lien interest,\" and \"mortgagor requirements\" are all decoys that sound plausible but aren't the actual named term.",
+    hint:"Watch the direction of the roles: the MORTGAGEE is the lender (the bank) — the MORTGAGOR is the borrower. The term you want matches the party actually demanding the protection, which is the bank/lender." },
+  { id:'ws86', cat:'Scheduled Personal Property / Personal Articles Floater',
+    q:"What best describes the Scheduled Personal Property endorsement or the separate policy called a Personal Articles Floater?",
+    options:["covers jewelry, silverware, and furs on a \"valued\" basis","an endorsement providing replacement cost coverage for certain types of personal property","provides very broad \"all risk\" coverage for scheduled property","does not cover fine arts or antiques because they are often irreplaceable"],
+    correct:"provides very broad \"all risk\" coverage for scheduled property",
+    explain:"While specific scheduled items like jewelry are often covered on an agreed/valued basis, the BEST overall description of this endorsement/floater is that it provides broad, open-peril (\"all risk\") coverage — because it can schedule far more than just jewelry, silverware, and furs. It absolutely CAN cover fine arts and antiques (the opposite of option D), which is actually one of its more common uses for irreplaceable items.",
+    hint:"This is a \"best describes\" question, meaning some other options are technically true in narrow cases but incomplete. Look for the answer describing the endorsement's full SCOPE (broad all-risk coverage) rather than one narrow example (jewelry) or a false exclusion (fine arts)." },
+  { id:'ws87', cat:'Homeowners — Eligibility Limits',
+    q:"All of the following would be eligible for a Homeowners (HO) Policy, EXCEPT:",
+    options:["owner-occupant of a five-unit structure","owner-occupant of the dwelling","intended owner-occupant of a dwelling under construction","one co-owner of a two-family dwelling that is occupied by co-owners"],
+    correct:"owner-occupant of a five-unit structure",
+    explain:"Homeowners policies cap out at four-family dwellings — a five-unit structure exceeds that limit and simply isn't eligible for an HO policy at all, regardless of occupancy. A standard owner-occupant, an intended owner-occupant of a home still under construction, and a co-owner occupying a two-family dwelling are all valid, eligible scenarios.",
+    hint:"The magic number for HO eligibility is four units — memorize it as a hard ceiling. Any answer describing a FIVE-unit (or larger) structure is automatically disqualified no matter how normal the rest of the scenario sounds." },
+  { id:'ws88', cat:'Ocean Marine — Warehouse-to-Warehouse',
+    q:"What type of an insurance contract would be needed to provide coverage for warehouse-to-warehouse movement?",
+    options:["motor truck cargo","ocean marine","commercial general liability","business owner's policy"],
+    correct:"ocean marine",
+    explain:"Ocean marine is the broadest marine coverage available — broad enough that it protects cargo whether it's actually on the water, over the water, or on land in between. That full door-to-door protection is exactly why it's often nicknamed \"warehouse-to-warehouse\" coverage. Motor truck cargo only covers the trucking leg, and CGL/BOP aren't marine cargo coverages at all.",
+    hint:"\"Warehouse-to-warehouse\" is essentially ocean marine's nickname — when you see that exact phrase in a question, it's pointing you straight at ocean marine, not a land-only or general liability form." },
+  { id:'ws89', cat:'BOP — Utility Services Direct Damage',
+    q:"Strasburg Meats is insured under a Businessowners Policy (BOP). A traffic accident 6 blocks away causes a power outage at the substation and power is out at the store for 3 days. Due to the rise in freezer/refrigeration temperatures, the health department requires the store to discard everything. The loss of the contents would be covered by:",
+    options:["utility services - Time Element endorsement","contents coverage on the BOP","utility service provider's general liability","utility services - Direct Damage endorsement"],
+    correct:"utility services - Direct Damage endorsement",
+    explain:"This is the same Strasburg Meats scenario as the income-loss version, but notice the question is now asking about the CONTENTS (the discarded meat itself), not the lost income. Since the power interruption is the direct cause of the physical loss to the contents, base contents coverage excludes it — the fix here is the Utility Services Direct Damage endorsement (BP 04 56), a different endorsement from the Time Element version, which instead covers the resulting INCOME loss, not physical property.",
+    hint:"Compare this carefully against the income-loss version of this same scenario: Direct Damage endorsement = physical property/contents loss. Time Element endorsement = income loss. Same outage, two different endorsements depending on what's actually being asked about." },
+  { id:'ws90', cat:'PAP — Split Limit Payout Math',
+    q:"Tom owns a Personal Auto Policy (PAP) with limits of 100/300/50. He is responsible for injuring two individuals, Bob and Ray, in a collision. Bob suffers $45,000 and Ray suffers $105,000 in bodily injury damages. What will Tom's auto policy pay?",
+    options:["$145,000 plus defense costs","$150,000 plus defense costs","$145,000","$150,000"],
+    correct:"$145,000 plus defense costs",
+    explain:"With 100/300/50 limits, no single person can collect more than $100,000 regardless of their actual damages. Bob's $45,000 is under that cap, so he gets the full $45,000. Ray's $105,000 exceeds the per-person limit, so he's capped at $100,000. Total: $45,000 + $100,000 = $145,000 — and defense costs get paid on top of that, not carved out of the liability limit.",
+    hint:"Don't just add the two actual damage amounts together and cap at the per-accident limit — check EACH person individually against the per-person limit first. Ray's real damages ($105,000) get clipped down to $100,000 before you add Bob's amount in, and defense costs are always additional, never subtracted from the payout." },
+  { id:'ws91', cat:"Workers' Comp — Federal Overlap Laws",
+    q:"What is a federal law that provides greater benefits than those available under state Workers' Compensation laws for certain categories of employees?",
+    options:["Neither FELA and Long shore nor Harbor Workers' Compensation Act","Long shore and Harbor Workers' Compensation Act","FELA","Both FELA and Long shore and Harbor Workers' Compensation Act"],
+    correct:"Both FELA and Long shore and Harbor Workers' Compensation Act",
+    explain:"Two separate federal laws each cover their own category of worker with enhanced benefits beyond state Workers' Comp: FELA covers interstate railroad workers, while the Longshore and Harbor Workers' Compensation Act covers those who load, unload, build, and repair ships in port or at sea. The question asks broadly about \"certain categories of employees\" (plural), which is the tell that both laws are the answer, not just one.",
+    hint:"The question's own wording is a clue — \"certain categories of employees\" is plural, hinting there's more than one law/category involved. Don't pick just the one that sounds most familiar; check whether the \"both\" option is on the table first." },
+
+  { id:'ws92', cat:'Claims — Mysterious Disappearance',
+    q:"The Chens host a party for close friends. When the guests arrive, they place their coats in the bedroom. Two days later, Mr. Chen discovers that his wristwatch is missing from the dresser. The loss is referred to as a:",
+    options:["robbery","burglary","mysterious disappearance","theft"],
+    correct:"mysterious disappearance",
+    explain:"Robbery and burglary both require specific evidence — a threat of force, or visible signs of forced entry. Here there's neither: the watch is just gone, discovered two days later, with no idea what actually happened to it. That undefined, unknown-cause loss is exactly what \"mysterious disappearance\" means. \"Theft\" is too generic and assumes a cause (someone took it) that hasn't actually been established.",
+    hint:"The two-day gap and total absence of any evidence are the tell. If you can't point to force, a break-in, or even confirm someone stole it, it doesn't fit any of the more specific terms — it's a mysterious disappearance by definition." },
+  { id:'ws93', cat:'All-Risk Policies — Where to Check Coverage',
+    q:"Phil bought an all risk policy and was told by his agent that everything was covered. After a loss, where does Phil look to see if in fact that loss will be covered?",
+    options:["conditions section regarding what to do after a loss","declarations page","exclusions section","no need to look anywhere, the agent told him everything was covered"],
+    correct:"exclusions section",
+    explain:"An all-risk (open peril) policy covers everything UNLESS it's specifically excluded — so the exclusions section is where the real boundaries of coverage actually live. The agent's broad \"everything's covered\" statement isn't reliable proof of anything; if it turns out to be wrong, that could expose the agent to an errors and omissions claim, but Phil would still have to prove he was misled.",
+    hint:"\"All risk\" doesn't mean unlimited — it means broad coverage with specific carve-outs. Whenever a policy is described as all-risk/open-peril, the real question of what's NOT covered always lives in the exclusions section." },
+  { id:'ws94', cat:'Mortgagee — Proof of Loss Timing',
+    q:"After being notified of a loss under a property policy, the mortgagee has how long to submit the written proof of loss?",
+    options:["20 days","12 months","30 days","60 days"],
+    correct:"60 days",
+    explain:"If the insured fails to submit their own proof of loss, the mortgagee gets an ADDITIONAL 60 days after the loss to submit it themselves — a safety net that protects the lender's interest even when the insured drops the ball on paperwork.",
+    hint:"This pairs with mortgagee rights — the lender's protections don't stop at just being listed on the policy. The 60-day window is a backstop specifically so a lender's interest doesn't get wiped out by an insured who forgets to file paperwork." },
+  { id:'ws95', cat:'HO Coverage C — Sublimits vs. Worldwide Coverage',
+    q:"Which of the following property types does NOT have a sublimit under Coverage C - Personal Property of a Homeowners (HO) Policy?",
+    options:["firearms","silverware, gold ware, or pewter ware","jewelry, watches, furs, and precious and semi-precious stones","property you take with you on a trip to Myrtle Beach"],
+    correct:"property you take with you on a trip to Myrtle Beach",
+    explain:"Firearms, silverware/gold/pewter ware, and jewelry/watches/furs/stones all carry specific dollar sublimits AND require the loss to be from theft specifically. Personal property in general, though, is covered worldwide under Coverage C — so property you simply take on a trip doesn't get squeezed into one of those narrow theft-only sublimit categories.",
+    hint:"Three of these four categories are the classic named sublimit list you have to memorize (firearms, silver/gold/pewter, jewelry/furs/stones) — all theft-only, all dollar-capped. The odd one out isn't a special category at all, it's just regular personal property traveling with worldwide coverage." },
+  { id:'ws96', cat:'Boatowners Policy — Scope of Coverage',
+    q:"The Boatowners policy provides coverage for:",
+    options:["the hull itself, but never miscellaneous equipment","smaller boats on inland lakes only","the hull and equipment only","the hull, equipment, and watercraft liability"],
+    correct:"the hull, equipment, and watercraft liability",
+    explain:"A Boatowners policy is a genuine package — hull damage (the boat itself), equipment aboard it, AND liability coverage for harm the watercraft causes to others, all under one policy. It's not limited to inland lakes, and it doesn't stop short at just the hull or just hull-plus-equipment.",
+    hint:"Think of it as the marine equivalent of an auto policy — physical damage to the vehicle itself AND liability for what it does to others, bundled together. Any answer that leaves out one of those three pieces (hull, equipment, liability) is incomplete." },
+  { id:'ws97', cat:'DP-1 Coverage B — Business Use Exclusion',
+    q:"George has $40,000 of insurance on his dwelling under form DP-1. Under Coverage B of the form, other structures, he may apply up to 10% of the amount of insurance applying to the dwelling to cover all of the following, EXCEPT:",
+    options:["private garage rented to a neighbor for storage of the neighbor's automobile","boathouse where the insured keeps his speedboat","small building used by the insured for his woodworking hobby","shed used for the storage of baled hay, neighbor's combine, and other farm machinery"],
+    correct:"shed used for the storage of baled hay, neighbor's combine, and other farm machinery",
+    explain:"Coverage B on other structures excludes structures used for BUSINESS purposes — and farming counts as a business activity. Storing baled hay and a neighbor's farm equipment crosses that line. A garage rented to a neighbor for personal auto storage, a boathouse for a personal speedboat, and a hobby woodworking shed are all personal, non-business uses that stay eligible.",
+    hint:"The test isn't \"is this technically making money\" in a strict sense — it's whether the activity is a BUSINESS use. Farming is specifically classified as business use even when it feels like it's just \"stuff stored in a shed.\"" },
+  { id:'ws98', cat:'HO Forms — Broad Form on Both Dwelling & Contents',
+    q:"What Homeowners (HO) Policy form provides broad form coverage for both the dwelling and personal property?",
+    options:["HO-3","HO-8","HO-2","HO-5"],
+    correct:"HO-2",
+    explain:"HO-2 is broad form on BOTH sides — the dwelling and the contents. HO-3 flips that (special/open-peril on the dwelling, broad form on contents), HO-5 goes further and gives open-peril/all-risk on both, and HO-8 only provides basic (not broad) coverage on both buildings and personal property.",
+    hint:"Line up the four forms by coverage level: HO-8 = basic/basic. HO-2 = broad/broad. HO-3 = special/broad (mixed). HO-5 = special/special (all risk on both). Matching \"broad form on both\" points straight at HO-2." },
+  { id:'ws99', cat:'Applications — Representations',
+    q:"Answers to questions on an application of insurance are best defined as:",
+    options:["written testimony","warranties","representations","misrepresentation"],
+    correct:"representations",
+    explain:"A representation is the truth to the best of the applicant's knowledge and belief at the time — not a guarantee of absolute accuracy (that would be a warranty), and not automatically a lie (that would be misrepresentation). Application answers are simply treated as good-faith representations unless proven otherwise.",
+    hint:"Warranty implies an absolute guarantee of truth; misrepresentation implies it's already known to be false. Representation sits in the middle — the applicant's honest best understanding, which is the legal standard application answers are actually held to." },
+  { id:'ws100', cat:"Workers' Comp — Foreign Coverage Endorsement",
+    q:"The Foreign Coverage Endorsement to Workers Compensation will cover US citizens working outside the country for how many days?",
+    options:["90","180","60","365"],
+    correct:"90",
+    explain:"The Foreign Coverage Endorsement is meant as a temporary bridge, not a permanent solution — it provides coverage for no longer than 90 days for US citizens working abroad.",
+    hint:"This endorsement is explicitly TEMPORARY by design — 90 days is the number to lock in, not 60, 180, or a full year. Longer overseas assignments need a different, more permanent coverage solution entirely." },
+  { id:'ws101', cat:'Legal Concepts — Waiver',
+    q:"The voluntary abandonment of a known or legal right is:",
+    options:["waiver","warranty","concealment","estoppel"],
+    correct:"waiver",
+    explain:"Waiver means voluntarily giving up a right you know you have — a clean, simple definition. Estoppel is a related but different concept (being prevented from later asserting a right BECAUSE of your own prior conduct or statements), concealment is hiding a material fact, and warranty is a guarantee of truth or performance.",
+    hint:"Estoppel and waiver often get confused because they're both about rights not being enforced — but waiver is a voluntary, deliberate choice to give something up, while estoppel is more about being blocked from going back on your own earlier actions or words." },
+  { id:'ws102', cat:'Commercial Property — Co-insurance Math',
+    q:"Mr. Smith has commercial property coverage in the amount of $400,000 on his building. He suffered a fire loss of $120,000. The replacement cost of the building at the time of the loss was $600,000. If his policy contains an 80% co-insurance clause, how much will he collect?",
+    options:["$100,000 minus the deductible","$110,000 minus the deductible","$120,000 minus the deductible","$80,000 minus the deductible"],
+    correct:"$100,000 minus the deductible",
+    explain:"Same formula as Walt's HO-3 fire loss, just with commercial numbers: the 80% co-insurance requirement is $600,000 × 80% = $480,000. Mr. Smith only carries $400,000, so his co-insurance percentage is $400,000 ÷ $480,000 (\"did carry\" ÷ \"should have carried\"). Apply that fraction to the loss: $400,000/$480,000 × $120,000 = $100,000 — then the deductible comes off that.",
+    hint:"Same two-step co-insurance formula every time: (1) find the required coverage — replacement cost × 80%, (2) divide what's actually carried by that requirement, and apply THAT percentage to the loss amount, not to the policy limit. The deductible always comes off at the very end." },
 ];
 
-/* ---------- Sections — groups the 80 weak spots into 8 topic areas ---------- */
+/* ---------- Sections — groups the 102 weak spots into 8 topic areas ---------- */
 const SECTIONS = [
   { id:'licensing', icon:'📋', title:'Licensing & Producer Conduct',
     intro:"This first stretch is about what it actually takes to get and keep a producer license in PA — the real requirements, the self-reporting duties, and the lines you can't cross around referral fees and rebates.",
@@ -1028,19 +1168,19 @@ const SECTIONS = [
     ids:['ws10','ws11'] },
   { id:'auto', icon:'🚗', title:'Auto Insurance',
     intro:"PA auto law has its own quirks — tort option notice periods, PIP timing and dollar caps, the state's assigned-risk plan, and how UM/UIM coverage actually works.",
-    ids:['ws12','ws13','ws14','ws15','ws16','ws55','ws56','ws68','ws78'] },
+    ids:['ws12','ws13','ws14','ws15','ws16','ws55','ws56','ws68','ws78','ws90'] },
   { id:'workcomp', icon:'🩹', title:"Workers' Compensation",
     intro:"Just one here, but it's a real trap — the disability rating threshold that decides whether someone keeps their total disability classification after 104 weeks.",
-    ids:['ws17','ws46','ws60','ws61','ws65','ws69'] },
+    ids:['ws17','ws46','ws60','ws61','ws65','ws69','ws91','ws100'] },
   { id:'propcov', icon:'🏡', title:'Property Coverage Concepts',
     intro:"Fresh misses from the 150-question exam simulator: co-insurance math, other-structures percentages, DP form quirks, and the excluded perils that trip people up.",
-    ids:['ws20','ws23','ws24','ws27','ws29','ws32','ws45','ws48','ws51','ws52','ws70','ws71','ws75','ws79'] },
+    ids:['ws20','ws23','ws24','ws27','ws29','ws32','ws45','ws48','ws51','ws52','ws70','ws71','ws75','ws79','ws81','ws84','ws85','ws86','ws87','ws94','ws95','ws97','ws98','ws102'] },
   { id:'liabcomm', icon:'🏢', title:'Liability & Commercial Lines',
     intro:"Umbrella vs. CGL, fiduciary vs. crime coverage, aggregate limits, consent-to-settle, BOP quirks, boatowners, and workers\u2019 comp basics — the commercial-side traps.",
-    ids:['ws21','ws22','ws25','ws26','ws28','ws33','ws37','ws39','ws40','ws41','ws42','ws43','ws44','ws47','ws49','ws50','ws53','ws54','ws62','ws63','ws64'] },
+    ids:['ws21','ws22','ws25','ws26','ws28','ws33','ws37','ws39','ws40','ws41','ws42','ws43','ws44','ws47','ws49','ws50','ws53','ws54','ws62','ws63','ws64','ws82','ws88','ws89','ws96'] },
   { id:'claimsgen', icon:'📑', title:'Claims Handling & General Principles',
     intro:"The definitional traps: pure risk, adverse selection, what an insurer can and can\u2019t do at settlement, and how appraisal and arbitration clauses actually work.",
-    ids:['ws30','ws31','ws34','ws35','ws36','ws38','ws66','ws67','ws72','ws73','ws74','ws76','ws77','ws80'] }
+    ids:['ws30','ws31','ws34','ws35','ws36','ws38','ws66','ws67','ws72','ws73','ws74','ws76','ws77','ws80','ws83','ws92','ws93','ws99','ws101'] }
 ];
 function buildSectionWalk(){
   const walk=[];
