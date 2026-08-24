@@ -354,7 +354,7 @@
   <header>
     <span class="leaf-corner tl">🌿</span><span class="leaf-corner tr">🌿</span>
     <h1>Study Grove<span class="h1-sprout"> 🌱</span></h1>
-    <div class="subtitle">102 weak spots from your PA P&amp;C practice runs — through Aug 23, 2026. Pick a way through the grove.</div>
+    <div class="subtitle">117 weak spots from your PA P&amp;C practice runs — through Aug 24, 2026. Pick a way through the grove.</div>
   </header>
 
   <div class="topbar">
@@ -519,7 +519,7 @@
 
 <script>
 /* ============================================================
-   DATA — 102 weak spots from PA P&C practice runs (law + coverage)
+   DATA — 117 weak spots from PA P&C practice runs (law + coverage)
    (question #1/"Mary" appeared twice with reshuffled choices — both
    misses are folded into one card, seeded as an existing repeat miss)
    (ws41–ws60 added Aug 21 2026 review batch: BOP, CGL, BAP, DP, bonds,
@@ -533,6 +533,9 @@
    (ws92–ws102 added Aug 23 2026, same exam sim, second batch: mysterious
    disappearance, all-risk exclusions, HO Coverage C sublimits, boatowners,
    DP-1 business-use exclusion, representations/waiver, co-insurance math)
+   (ws103–ws117 added Aug 24 2026: a full BOP-focused batch — debris removal,
+   endorsements, exclusions, eligibility caps, premium audit, civil authority,
+   Coverage B, vacancy definition)
    ============================================================ */
 const WEAK_SPOTS = [
   { id:'ws01', cat:'Producer Licensing — Manager/GA Fine', missSeed:2,
@@ -1153,9 +1156,100 @@ const WEAK_SPOTS = [
     correct:"$100,000 minus the deductible",
     explain:"Same formula as Walt's HO-3 fire loss, just with commercial numbers: the 80% co-insurance requirement is $600,000 × 80% = $480,000. Mr. Smith only carries $400,000, so his co-insurance percentage is $400,000 ÷ $480,000 (\"did carry\" ÷ \"should have carried\"). Apply that fraction to the loss: $400,000/$480,000 × $120,000 = $100,000 — then the deductible comes off that.",
     hint:"Same two-step co-insurance formula every time: (1) find the required coverage — replacement cost × 80%, (2) divide what's actually carried by that requirement, and apply THAT percentage to the loss amount, not to the policy limit. The deductible always comes off at the very end." },
+
+  { id:'ws103', cat:'BOP — Debris Removal',
+    q:"What is covered under an unendorsed Businessowners policy (BOP)?",
+    options:["debris removal","pollution cleanup ordered by the federal government","wear and tear","smoke, vapor, or gas"],
+    correct:"debris removal",
+    explain:"Debris removal is built into the standard BOP automatically — no endorsement needed. It reimburses the expense of clearing and disposing of debris (like damaged building materials) after a covered loss such as fire, storm, or another insured peril. Pollution cleanup mandated by the government, ordinary wear and tear, and smoke/vapor/gas contamination are all classic BOP exclusions, not automatic coverages.",
+    hint:"Three of these four options describe things that damage or degrade property over time or require special environmental handling — all classic exclusions. Only debris removal describes cleanup after a COVERED loss, which is why it's the one that's automatically included." },
+  { id:'ws104', cat:'BOP — Endorsements That Can\'t Be Added',
+    q:"What type of endorsement CANNOT be added to a Businessowners Policy (BOP) contract?",
+    options:["premises and operations","hired auto","valuable paper and records","accounts receivable"],
+    correct:"premises and operations",
+    explain:"Premises and operations liability is already baked into the BOP by default — it's a foundational, automatic part of the policy protecting against bodily injury or property damage from the insured's premises or ongoing operations. Since it's already there, it CAN'T be added as an endorsement — there's nothing to add. Hired auto, valuable papers and records, and accounts receivable are all real, purchasable BOP endorsements.",
+    hint:"Ask whether the coverage is already automatically part of the base BOP. If it's already there by default, it can't logically be \"added\" — you're looking for the one option that's foundational rather than optional." },
+  { id:'ws105', cat:'BOP — Debris Removal Reporting Window',
+    q:"If a business intends to claim debris removal under the terms of the Businessowners Policy (BOP), it must be reported to the insurer:",
+    options:["within 30 days from the date of physical loss","immediately upon loss","within 90 days from the date of physical loss","within 180 days from the date of physical loss"],
+    correct:"within 180 days from the date of physical loss",
+    explain:"The insured has a full 180 days from the date of the physical loss to report a debris removal claim — a fairly generous window, not an immediate-notification requirement. The debris removal loss itself is limited to the actual expense of removal, or a maximum of 25% of the direct physical damage paid, plus the deductible amount.",
+    hint:"Don't confuse this with the general \"report promptly\" duty that applies to property claims overall — debris removal specifically gets its own extended 180-day window, distinct from the base claim-reporting duty." },
+  { id:'ws106', cat:'BOP — Business Income Coverage Period',
+    q:"The businessowners policy (BOP) covers loss of income:",
+    options:["Up to 25% of the policy limits","Within 12 months following direct physical loss","Within three months following direct physical","Up to 10% of the policy"],
+    correct:"Within 12 months following direct physical loss",
+    explain:"Business Income and Extra Expense coverage under the BOP protects lost income from a necessary suspension of operations, extending for up to 12 months from the date of the direct physical loss — not a percentage of the policy limit, and not a short fixed window like 3 months.",
+    hint:"Business Income coverage is a TIME-based coverage period (up to 12 months), not a percentage-of-limits coverage. Any answer expressing this as a percentage of the policy is describing the wrong kind of limit entirely." },
+  { id:'ws107', cat:'BOP — Property Exclusions (Signs)',
+    q:"All of the following are excluded from a Businessowners policy (BOP), EXCEPT:",
+    options:["radio antenna tower","contraband","lawns","signs attached to the building"],
+    correct:"signs attached to the building",
+    explain:"Signs permanently attached to the insured building are actually considered part of the covered property under a BOP — they're not excluded at all, and are typically covered for perils like fire, vandalism, or windstorm. Radio antenna towers, contraband, and lawns/land are all classic exclusions.",
+    hint:"This pairs with the general \"land and anything on/attached to it\" exclusion pattern — but signs are the specific exception carved back IN because they're treated as part of the building structure itself, not as land or a separate freestanding structure." },
+  { id:'ws108', cat:'BOP — Property Exclusions (Animals for Sale)',
+    q:"All of the following will be excluded under a Businessowners Policy (BOP) EXCEPT:",
+    options:["Computers that are permanently installed in vehicles","Floating watercraft","Illegal contraband","Animals for sale in a pet shop"],
+    correct:"Animals for sale in a pet shop",
+    explain:"Certain classes of property are flatly excluded from a BOP — autos, illegal contraband, land, water, floating watercraft, and computers permanently installed in vehicles. The BOP doesn't generally cover animals either, but it makes a specific carve-out exception for animals kept as stock for sale (like in a pet shop) or animals owned by others and boarded with the insured.",
+    hint:"This is a \"which one got an exception carved back in\" question. The general rule excludes animals — but a specific, narrow business-use exception (animals as sellable stock) reverses that exclusion for pet shops specifically." },
+  { id:'ws109', cat:'BOP — Contractor Payroll Eligibility Cap',
+    q:"If a painter wished to buy a Businessowners Policy (BOP):",
+    options:["his payroll cannot exceed $300,000","he would only be eligible if his painting business were a general contractor firm","his payroll cannot exceed $3,000,000","he would be turned down as an ineligible occupation"],
+    correct:"his payroll cannot exceed $300,000",
+    explain:"Contractors — painters, electricians, drywallers, carpenters, and similar trades — are all eligible occupations for a BOP, but they're capped at a maximum payroll of $300,000. A painter isn't turned away as ineligible, and doesn't need to be restructured as a general contractor firm to qualify.",
+    hint:"Contractors as a category ARE eligible for a BOP — the real constraint isn't occupation type, it's a specific payroll ceiling. $300,000 is the number to memorize for this eligibility cap." },
+  { id:'ws110', cat:'BOP — Premium Audit Timing',
+    q:"According to the Common Conditions of the Businessowners policy (BOP), the insurer can make warranted changes to premium (subject to an audit):",
+    options:["after the close of the coverage period","before the close of the coverage period","during underwriting only","within 45 days of a policy being issued"],
+    correct:"after the close of the coverage period",
+    explain:"When a premium is designated as an \"advance premium,\" the insurer has the right to conduct a premium audit AFTER the coverage period closes, to determine the actual level of exposure and adjust (raise) the premium for the period that just concluded — not before, and not just during underwriting.",
+    hint:"Think of it as reconciling after the fact — the insurer estimates exposure up front (the advance premium), then true-ups what actually happened once the coverage period is OVER, not while it's still in progress." },
+  { id:'ws111', cat:'BOP — Optional Coverage Not Available',
+    q:"What optional coverage is NOT available under a Business owners policy?",
+    options:["medical malpractice","burglary and robbery","outdoor signs","Equipment Breakdown coverage"],
+    correct:"medical malpractice",
+    explain:"A BOP is built for general liability exposures common to small and medium-sized businesses — it simply doesn't offer medical malpractice as an optional add-on. Healthcare providers need a completely separate, specialized medical malpractice policy to cover claims of professional negligence or errors in providing medical services. Burglary/robbery, outdoor signs, and Equipment Breakdown are all real optional BOP coverages.",
+    hint:"Medical malpractice is a highly specialized professional liability coverage that lives in its own dedicated insurance product entirely — it's never going to show up as a simple add-on to a general small-business policy like the BOP." },
+  { id:'ws112', cat:'BOP — Apartment House Eligibility',
+    q:"Eligible apartment houses for a Businessowners Policy (BOP) include those that do NOT exceed:",
+    options:["six stories and 60 units or more","four stories and 60 units or less","four stories and 60 units or more","six stories and 60 units or less"],
+    correct:"six stories and 60 units or less",
+    explain:"Eligible apartment houses under a BOP are capped at six stories AND 60 units or less — both numbers matter, and both use \"or less\" as the ceiling, not \"or more.\" Anything exceeding those height or unit limits needs more specialized coverage.",
+    hint:"Watch for direction words like \"or more\" quietly flipped into what should be an \"or less\" ceiling — the two real numbers to memorize are six stories and 60 units, both capped at OR LESS." },
+  { id:'ws113', cat:'BOP — Land Exclusion',
+    q:"The Businessowners policy (BOP) pays for direct physical loss of, or damage to, covered property. What would NOT be covered by the BOP?",
+    options:["floor coverings","outdoor furniture","land","dishwasher"],
+    correct:"land",
+    explain:"Land itself is excluded from BOP coverage — it's a non-depreciable asset that doesn't face the same kind of physical loss or damage risk that structures and contents do. Floor coverings, outdoor furniture, and a dishwasher are all coverable property. Land improvements like landscaping or fences, though, may still be covered depending on the specific policy language and endorsements.",
+    hint:"This is the same land exclusion pattern that shows up across almost every property form — land itself is never covered property, though improvements ON the land sometimes can be, depending on the specific endorsement." },
+  { id:'ws114', cat:'BOP — Fire Legal Liability Limit',
+    q:"Fire legal liability (Damage to Premises Rented To You) coverage under a Businessowners Policy (BOP) is subject to what limit?",
+    options:["aggregate limit","dual limit","per occurrence limit","per fire limit"],
+    correct:"per fire limit",
+    explain:"Fire legal liability — now more commonly called Damage to Premises Rented To You — pays for property damage to a landlord's space caused by the tenant's negligence, and it's specifically structured on a PER FIRE basis, not a general aggregate or per-occurrence limit.",
+    hint:"The coverage's own two names both mention fire directly — that's your clue that the limit itself is also structured specifically around fire events (per fire), not a broader catch-all occurrence or aggregate limit." },
+  { id:'ws115', cat:'BOP — Civil Authority Coverage',
+    q:"If the local police refuse to let a business owner gain access to his business due to safety concerns for a couple of weeks, the owner is entitled to Business income because of which additional expense coverage under the Businessowners Policy (BOP)?",
+    options:["Ordinance and Law","Civil Authority","Extended Business Income","Extra Expense"],
+    correct:"Civil Authority",
+    explain:"When local authorities block access to the business premises — even though the business itself isn't directly damaged, often because of a NEARBY property issue — Civil Authority coverage is what pays Business Income after the standard 72-hour waiting period, for a limited time depending on the specific BI form used (older forms: 3 weeks; more recent forms: 4 weeks).",
+    hint:"Civil Authority is specifically about access being blocked by police/government order, often due to damage or danger at a NEARBY property, not the insured's own building. That's different from Ordinance and Law (building code upgrade costs) or Extra Expense (costs to keep operating)." },
+  { id:'ws116', cat:'BOP — Coverage B Exceptions',
+    q:"All of the following may be covered under Coverage B in a Businessowners Policy (BOP) Policy, EXCEPT:",
+    options:["Client property in the possession of the insured on the insured premises","Exterior building glass if the insured is a tenant","Appliances used for refrigeration, cooking, dishwashing, and laundry","Business property stored within 100 feet of the insured premises"],
+    correct:"Client property in the possession of the insured on the insured premises",
+    explain:"Coverage B covers the insured's OWN business personal property — items the insured owns and uses in the business. Property belonging to CLIENTS or customers isn't part of that, even while it's physically on the insured's premises. Protecting client property in the insured's care requires separate coverage, like Bailees Coverage or Inland Marine. Exterior glass (for a tenant), refrigeration/cooking/dishwashing/laundry appliances, and business property stored within 100 feet are all legitimately covered under Coverage B.",
+    hint:"The test is ownership, not location. Client property sitting ON the insured's premises is still the CLIENT'S property — Coverage B only follows what the insured themselves owns and uses in the business." },
+  { id:'ws117', cat:'BOP — Vacancy Definition',
+    q:"In a Businessowners Policy (BOP), an owned property is defined as vacant if what percentage of square footage is not used or leased?",
+    options:["more than 61%","more than 69%","more than 39%","more than 31%"],
+    correct:"more than 69%",
+    explain:"A BOP-insured building is considered VACANT if MORE than 69% of the square footage is not used or leased by the owner — meaning less than 31% is actually in use. That's a different (lower) threshold than \"unoccupied,\" which kicks in once occupancy falls below 35%.",
+    hint:"Don't round this to a cleaner-sounding number like 70% or two-thirds — the exact threshold is 69%, meaning the building has to be almost entirely empty (less than 31% used) before it crosses into vacant territory." },
 ];
 
-/* ---------- Sections — groups the 102 weak spots into 8 topic areas ---------- */
+/* ---------- Sections — groups the 117 weak spots into 8 topic areas ---------- */
 const SECTIONS = [
   { id:'licensing', icon:'📋', title:'Licensing & Producer Conduct',
     intro:"This first stretch is about what it actually takes to get and keep a producer license in PA — the real requirements, the self-reporting duties, and the lines you can't cross around referral fees and rebates.",
@@ -1177,7 +1271,7 @@ const SECTIONS = [
     ids:['ws20','ws23','ws24','ws27','ws29','ws32','ws45','ws48','ws51','ws52','ws70','ws71','ws75','ws79','ws81','ws84','ws85','ws86','ws87','ws94','ws95','ws97','ws98','ws102'] },
   { id:'liabcomm', icon:'🏢', title:'Liability & Commercial Lines',
     intro:"Umbrella vs. CGL, fiduciary vs. crime coverage, aggregate limits, consent-to-settle, BOP quirks, boatowners, and workers\u2019 comp basics — the commercial-side traps.",
-    ids:['ws21','ws22','ws25','ws26','ws28','ws33','ws37','ws39','ws40','ws41','ws42','ws43','ws44','ws47','ws49','ws50','ws53','ws54','ws62','ws63','ws64','ws82','ws88','ws89','ws96'] },
+    ids:['ws21','ws22','ws25','ws26','ws28','ws33','ws37','ws39','ws40','ws41','ws42','ws43','ws44','ws47','ws49','ws50','ws53','ws54','ws62','ws63','ws64','ws82','ws88','ws89','ws96','ws103','ws104','ws105','ws106','ws107','ws108','ws109','ws110','ws111','ws112','ws113','ws114','ws115','ws116','ws117'] },
   { id:'claimsgen', icon:'📑', title:'Claims Handling & General Principles',
     intro:"The definitional traps: pure risk, adverse selection, what an insurer can and can\u2019t do at settlement, and how appraisal and arbitration clauses actually work.",
     ids:['ws30','ws31','ws34','ws35','ws36','ws38','ws66','ws67','ws72','ws73','ws74','ws76','ws77','ws80','ws83','ws92','ws93','ws99','ws101'] }
