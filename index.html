@@ -178,7 +178,8 @@
   .trouble-panel h4{margin:0 0 10px;font-family:'Fraunces',serif;font-size:1em;color:var(--moss-deep);}
   .tp-empty{font-size:13px;color:var(--sub);font-style:italic;}
   .trouble-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;}
-  .trouble-list li{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;background:var(--panel-deep);border:1px solid var(--line);border-radius:8px;padding:7px 10px;}
+  .trouble-list li{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;background:var(--panel-deep);border:1px solid var(--line);border-radius:8px;padding:7px 10px;
+    transition:background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;}
   .tp-count{font-weight:800;color:var(--coral);white-space:nowrap;}
   .tp-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
   .tp-action-btn{
@@ -188,17 +189,55 @@
   .tp-action-btn:hover{border-color:var(--forest);}
   .tp-action-btn.download{background:linear-gradient(135deg,var(--leaf),var(--forest));color:#fff;border:none;}
 
+  /* ---------- Heat tiers — a weak spot missed enough times catches fire ---------- */
+  .trouble-list li.spot-heat-warm, .review-item.spot-heat-warm{
+    background:#2b1712; border-color:#6b3320;}
+  .trouble-list li.spot-heat-warm span:first-child{color:#f0d9cc;}
+  .trouble-list li.spot-heat-warm .tp-count{color:#ff8154; text-shadow:0 0 6px rgba(255,129,84,0.6);}
+  .review-item.spot-heat-warm .review-item-cat{background:#4a2417; color:#ffb894;}
+  .review-item.spot-heat-warm .review-item-count{color:#ff8154; text-shadow:0 0 6px rgba(255,129,84,0.6);}
+  .review-item.spot-heat-warm .review-item-q{color:#f4e2d6;}
+  .review-item.spot-heat-warm .review-item-a{color:#d9c2b4;}
+  .review-item.spot-heat-warm .review-item-a b{color:#ff9d6f;}
+
+  .trouble-list li.spot-heat-hot, .review-item.spot-heat-hot{
+    background:#1c0f0a; border-color:#8a3416; box-shadow:inset 0 0 14px rgba(255,80,30,0.16);}
+  .trouble-list li.spot-heat-hot span:first-child{color:#f7e6da;}
+  .trouble-list li.spot-heat-hot .tp-count{color:#ff5a2e; text-shadow:0 0 9px rgba(255,90,46,0.85); font-weight:900;}
+  .review-item.spot-heat-hot .review-item-cat{background:#5c2712; color:#ffbb8f;}
+  .review-item.spot-heat-hot .review-item-count{color:#ff5a2e; text-shadow:0 0 9px rgba(255,90,46,0.85); font-weight:900;}
+  .review-item.spot-heat-hot .review-item-q{color:#f9ece2;}
+  .review-item.spot-heat-hot .review-item-a{color:#dcc3b2;}
+  .review-item.spot-heat-hot .review-item-a b{color:#ff8f57;}
+
+  .trouble-list li.spot-heat-inferno, .review-item.spot-heat-inferno{
+    background:#120705; border-color:#ff4c1f;
+    box-shadow:inset 0 0 20px rgba(255,70,20,0.32), 0 0 14px rgba(255,70,20,0.28);
+    animation:spotEmberPulse 1.9s ease-in-out infinite;}
+  .trouble-list li.spot-heat-inferno span:first-child{color:#fff1e6;}
+  .trouble-list li.spot-heat-inferno .tp-count{color:#ff3f14; text-shadow:0 0 12px rgba(255,63,20,1), 0 0 22px rgba(255,90,30,0.65); font-weight:900;}
+  .review-item.spot-heat-inferno .review-item-cat{background:#6b2810; color:#ffcda3;}
+  .review-item.spot-heat-inferno .review-item-count{color:#ff3f14; text-shadow:0 0 12px rgba(255,63,20,1), 0 0 22px rgba(255,90,30,0.65); font-weight:900;}
+  .review-item.spot-heat-inferno .review-item-q{color:#fff5ec;}
+  .review-item.spot-heat-inferno .review-item-a{color:#e0c6b6;}
+  .review-item.spot-heat-inferno .review-item-a b{color:#ff8449;}
+  @keyframes spotEmberPulse{
+    0%,100%{box-shadow:inset 0 0 20px rgba(255,70,20,0.28), 0 0 12px rgba(255,70,20,0.22);}
+    50%{box-shadow:inset 0 0 28px rgba(255,100,35,0.48), 0 0 20px rgba(255,100,35,0.4);}
+  }
+
   /* ---------- Review Notes stage ---------- */
   .review-list{display:flex;flex-direction:column;gap:14px;}
   .review-item{
     background:var(--panel);border:1.5px solid var(--line);border-radius:16px;padding:18px 20px;backdrop-filter:blur(6px);
-  }
+    transition:background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;}
   .review-item-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
-  .review-item-cat{font-size:11px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--forest);background:var(--mint);padding:3px 10px;border-radius:20px;}
-  .review-item-count{font-size:11.5px;font-weight:800;color:var(--coral);}
-  .review-item-q{font-family:'Fraunces',serif;font-weight:600;font-size:1.02em;line-height:1.4;margin-bottom:8px;color:var(--ink);}
-  .review-item-a{font-size:0.9em;line-height:1.55;color:var(--sub);}
-  .review-item-a b{color:var(--forest);}
+  .review-item-cat{font-size:11px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--forest);background:var(--mint);padding:3px 10px;border-radius:20px;
+    transition:background 0.4s ease, color 0.4s ease;}
+  .review-item-count{font-size:11.5px;font-weight:800;color:var(--coral); transition:color 0.4s ease;}
+  .review-item-q{font-family:'Fraunces',serif;font-weight:600;font-size:1.02em;line-height:1.4;margin-bottom:8px;color:var(--ink); transition:color 0.4s ease;}
+  .review-item-a{font-size:0.9em;line-height:1.55;color:var(--sub); transition:color 0.4s ease;}
+  .review-item-a b{color:var(--forest); transition:color 0.4s ease;}
 
   /* ---------- Shared study stage ---------- */
   .stage{display:none;max-width:640px;margin:0 auto;}
@@ -1278,7 +1317,7 @@ const SECTIONS = [
 ];
 function buildSectionWalk(){
   const walk=[];
-  SECTIONS.forEach(sec=>{
+  shuffleArr(SECTIONS).forEach(sec=>{
     const items=shuffleArr(WEAK_SPOTS.filter(w=>sec.ids.includes(w.id)));
     walk.push({type:'intro', section:sec});
     items.forEach(w=>walk.push({type:'question', section:sec, spot:w}));
@@ -1426,6 +1465,12 @@ function updateGroveProgress(){
   document.getElementById('groveFill').style.width=pct+'%';
   document.getElementById('grovePct').textContent=pct+'% mastered ('+done+'/'+WEAK_SPOTS.length+')';
 }
+function spotHeatClass(missCount){
+  if(missCount>=4) return 'spot-heat-inferno';
+  if(missCount>=2) return 'spot-heat-hot';
+  if(missCount>=1) return 'spot-heat-warm';
+  return '';
+}
 function renderTroublePanel(){
   const body=document.getElementById('troublePanelBody');
   const actions=document.getElementById('tpActions');
@@ -1439,7 +1484,10 @@ function renderTroublePanel(){
   ul.className='trouble-list';
   trouble.slice(0,8).forEach(w=>{
     const li=document.createElement('li');
-    li.innerHTML='<span>'+w.cat+'</span><span class="tp-count">missed '+weakMissCount[w.id]+'×</span>';
+    const n=weakMissCount[w.id];
+    const heatCls=spotHeatClass(n);
+    if(heatCls) li.className=heatCls;
+    li.innerHTML='<span>'+w.cat+'</span><span class="tp-count">missed '+n+'×</span>';
     ul.appendChild(li);
   });
   body.innerHTML=''; body.appendChild(ul);
@@ -1457,9 +1505,11 @@ function openReviewNotes(){
   listEl.innerHTML='';
   trouble.forEach(w=>{
     const item=document.createElement('div');
-    item.className='review-item';
+    const n=weakMissCount[w.id];
+    const heatCls=spotHeatClass(n);
+    item.className='review-item'+(heatCls?' '+heatCls:'');
     item.innerHTML=
-      '<div class="review-item-head"><span class="review-item-cat">'+w.cat+'</span><span class="review-item-count">missed '+weakMissCount[w.id]+'×</span></div>'+
+      '<div class="review-item-head"><span class="review-item-cat">'+w.cat+'</span><span class="review-item-count">missed '+n+'×</span></div>'+
       '<div class="review-item-q">'+w.q+'</div>'+
       '<div class="review-item-a"><b>'+w.correct+'</b><br><br>'+w.explain+'</div>';
     listEl.appendChild(item);
