@@ -428,6 +428,13 @@
     padding:12px 32px;border-radius:100px;font-weight:900;cursor:pointer;font-size:14px;
     box-shadow:0 4px 22px rgba(255,46,154,0.45);
   }
+  .recap-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:4px;}
+  #quizRecapOverlay .recap-export-btn{
+    background:rgba(57,255,110,0.1);color:#39FF6E;border:1.5px solid #39FF6E;
+    padding:11px 22px;border-radius:100px;font-weight:800;cursor:pointer;font-size:13.5px;
+  }
+  #quizRecapOverlay .recap-export-btn:hover{background:rgba(57,255,110,0.2);}
+  #quizRecapOverlay .recap-export-btn:disabled{opacity:0.4;cursor:default;}
   .recap-readaloud{
     background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.14);border-radius:14px;
     padding:13px 15px;margin-bottom:14px;
@@ -444,6 +451,59 @@
   .recap-ra-btn{border:none;border-radius:100px;padding:9px 20px;font-weight:800;font-size:12.5px;cursor:pointer;}
   .recap-ra-btn.play{background:linear-gradient(135deg,#39FF6E,#F9FF3D);color:#0A0A0D;}
   .recap-ra-btn.stop{background:rgba(255,46,154,0.14);color:#FF6EC7;border:1.5px solid #FF2E9A;}
+
+  /* ---------- Streak rewards: full-canvas haze on a hot streak
+     (5 correct in a row) or a cold one (5 wrong in a row) ---------- */
+  .streak-haze{
+    position:fixed;inset:0;pointer-events:none;z-index:150;opacity:0;mix-blend-mode:screen;
+  }
+  .streak-haze.hot{
+    background:
+      radial-gradient(circle at 30% 25%, rgba(80,255,235,0.65), transparent 55%),
+      radial-gradient(circle at 72% 65%, rgba(0,210,255,0.6), transparent 60%),
+      linear-gradient(160deg, rgba(0,255,220,0.35), rgba(0,120,180,0.15));
+    animation:hazeTropical 2.4s ease-out forwards;
+  }
+  .streak-haze.hot-intense{
+    background:
+      radial-gradient(circle at 35% 30%, rgba(120,255,250,1), transparent 62%),
+      radial-gradient(circle at 68% 72%, rgba(0,235,255,0.95), transparent 66%),
+      radial-gradient(circle at 50% 50%, rgba(0,255,235,0.65), transparent 82%),
+      radial-gradient(circle at 15% 80%, rgba(0,255,200,0.55), transparent 70%),
+      linear-gradient(160deg, rgba(0,255,230,0.75), rgba(0,150,210,0.45));
+    backdrop-filter:blur(6px) saturate(2.2);
+    -webkit-backdrop-filter:blur(6px) saturate(2.2);
+    animation:hazeTropicalIntense 4.2s cubic-bezier(.36,.07,.19,.97) forwards;
+  }
+  .streak-haze.cold{
+    mix-blend-mode:normal;
+    background:
+      radial-gradient(circle at 50% 45%, rgba(255,120,20,0.75), rgba(255,60,0,0.5) 45%, rgba(120,15,0,0.25) 75%, transparent 100%);
+    animation:hazeOrange 1.5s cubic-bezier(.32,0,.6,1) forwards;
+  }
+  @keyframes hazeTropical{
+    0%{opacity:0;}
+    12%{opacity:1;}
+    65%{opacity:0.85;}
+    100%{opacity:0;}
+  }
+  @keyframes hazeTropicalIntense{
+    0%{opacity:0;transform:scale(1);filter:hue-rotate(0deg);}
+    8%{opacity:1;transform:scale(1.035);}
+    20%{transform:scale(0.978);filter:hue-rotate(-6deg);}
+    33%{transform:scale(1.03);}
+    46%{transform:scale(0.982);filter:hue-rotate(6deg);}
+    59%{transform:scale(1.024);}
+    72%{transform:scale(0.988);filter:hue-rotate(-4deg);}
+    85%{opacity:0.96;transform:scale(1.012);filter:hue-rotate(0deg);}
+    100%{opacity:0;transform:scale(1);}
+  }
+  @keyframes hazeOrange{
+    0%{opacity:0;}
+    6%{opacity:1;}
+    45%{opacity:0.9;}
+    100%{opacity:0;}
+  }
   .quiz-next-btn{
     display:block;margin:16px auto 0;background:linear-gradient(135deg,var(--leaf),var(--forest));color:#fff;
     border:none;padding:12px 28px;border-radius:100px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;
@@ -774,9 +834,14 @@
       </div>
     </div>
     <div class="recap-list" id="recapList"></div>
-    <button class="recap-close-btn" onclick="closeQuizRecap()">Back to the grove</button>
+    <div class="recap-actions">
+      <button type="button" class="recap-export-btn" id="recapExportBtn" onclick="downloadRecapMissed()">📥 Export missed questions</button>
+      <button type="button" class="recap-close-btn" onclick="closeQuizRecap()">Back to the grove</button>
+    </div>
   </div>
 </div>
+
+<div class="streak-haze" id="streakHaze"></div>
 
 <script>
 /* ============================================================
@@ -1628,6 +1693,49 @@ function soundStreak(n){
   __tone(660+bump,0,0.1,'triangle',0.05,2200);
   __tone(880+bump,0.06,0.16,'triangle',0.055,2400);
 }
+function __whistleUp(startFreq,endFreq,delay,dur,vol){
+  const ctx=__getCtx(); if(!ctx) return;
+  try{
+    const o=ctx.createOscillator(), g=ctx.createGain();
+    o.type='sine';
+    const t0=ctx.currentTime+(delay||0);
+    o.frequency.setValueAtTime(startFreq,t0);
+    o.frequency.exponentialRampToValueAtTime(endFreq,t0+dur);
+    g.gain.setValueAtTime(0,t0);
+    g.gain.linearRampToValueAtTime(vol,t0+0.05);
+    g.gain.exponentialRampToValueAtTime(0.001,t0+dur+0.05);
+    o.connect(g); g.connect(ctx.destination);
+    o.start(t0); o.stop(t0+dur+0.08);
+  }catch(e){}
+}
+function soundFireworks(){
+  if(!sfxOn) return;
+  // two launches, staggered, one with a harmony whistle for width
+  __whistleUp(280,1500,0,0.35,0.075);
+  __whistleUp(340,1900,0.08,0.3,0.05);
+  __whistleUp(260,1100,0.22,0.28,0.045);
+  // first, biggest boom
+  setTimeout(function(){
+    __tone(85,0,0.35,'sine',0.16,500);
+    __tone(55,0.03,0.5,'sine',0.13,350);
+    __tone(150,0.02,0.25,'sawtooth',0.05,700);
+    fireCrackle(0.12); fireCrackle(0.11); fireCrackle(0.1);
+  },340);
+  // second boom, a beat later, slightly smaller
+  setTimeout(function(){
+    __tone(70,0,0.3,'sine',0.12,450);
+    __tone(46,0.03,0.4,'sine',0.09,320);
+    fireCrackle(0.1); fireCrackle(0.09);
+  },600);
+  // long shimmering sparkle shower
+  [480,560,650,740,840,940,1050,1160,1280,1400,1540].forEach(function(delay,i){
+    setTimeout(function(){
+      fireCrackle(0.05+Math.random()*0.05);
+      if(i%2===0) __tone(1100+Math.random()*900,0,0.09,'triangle',0.035,3200);
+      if(i%3===0) __tone(1800+Math.random()*700,0,0.06,'sine',0.02,4000);
+    },delay);
+  });
+}
 document.addEventListener('click',function(e){
   if(e.target.closest('button')) soundClick();
 },true);
@@ -2045,7 +2153,7 @@ function flashJudge(gotIt){
    QUIZ MODE
    ============================================================ */
 let quizWalk=[], quizStepIdx=0, quizScore=0, quizAnswered=false, quizQuestionsAnswered=0;
-let quizStreak=0, quizMilestonesHit={};
+let quizStreak=0, quizMissStreak=0, quizMilestonesHit={};
 let quizMissed=[], quizSessionActive=false, quizPendingMode='full';
 let quizTimerInterval=null, quizTimeRemaining=0;
 function openQuiz(){
@@ -2078,7 +2186,7 @@ function startQuizSession(){
     quizWalk=quizWalk.slice(0,cut);
   }
   quizStepIdx=0; quizScore=0; quizQuestionsAnswered=0;
-  quizStreak=0; quizMilestonesHit={}; quizMissed=[]; quizSessionActive=true;
+  quizStreak=0; quizMissStreak=0; quizMilestonesHit={}; quizMissed=[]; quizSessionActive=true;
   document.getElementById('qmStreak').style.display='none';
   document.getElementById('qmTotal').textContent=walkQuestionCount(quizWalk);
   ['25','50','75'].forEach(function(m){ document.getElementById('qmFlag'+m).classList.remove('lit'); });
@@ -2175,6 +2283,8 @@ function stopRecapAudio(){
 }
 function renderQuizRecap(){
   const listEl=document.getElementById('recapList');
+  const exportBtn=document.getElementById('recapExportBtn');
+  if(exportBtn) exportBtn.disabled=!quizMissed.length;
   if(!quizMissed.length){
     listEl.innerHTML='<div class="recap-empty">Clean sweep — nothing missed this session. 🌟</div>';
     return;
@@ -2188,6 +2298,40 @@ function renderQuizRecap(){
       '<div class="recap-item-explain">'+m.explain+'</div>'+
     '</div>';
   }).join('');
+}
+function buildRecapMissedText(){
+  if(!quizMissed.length) return null;
+  const lines=['STUDY GROVE — QUIZ SESSION: MISSED QUESTIONS','Exported '+new Date().toLocaleString(),'Grouped by topic, for isolated follow-up study','='.repeat(50),''];
+  const byCat={};
+  const order=[];
+  quizMissed.forEach(function(m){
+    if(!byCat[m.cat]){ byCat[m.cat]=[]; order.push(m.cat); }
+    byCat[m.cat].push(m);
+  });
+  order.forEach(function(cat){
+    lines.push('## '+cat+' ('+byCat[cat].length+' missed)');
+    lines.push('-'.repeat(40));
+    byCat[cat].forEach(function(m,i){
+      lines.push((i+1)+'. Q: '+m.q);
+      lines.push('   You answered: '+m.chosen);
+      lines.push('   Correct answer: '+m.correct);
+      lines.push('   Why: '+m.explain);
+      lines.push('');
+    });
+  });
+  return lines.join('\n');
+}
+function downloadRecapMissed(){
+  const text=buildRecapMissedText();
+  if(!text) return;
+  const blob=new Blob([text],{type:'text/plain'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const stamp=new Date().toISOString().slice(0,10);
+  a.href=url; a.download='study-grove-missed-'+stamp+'.txt';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  soundClick();
 }
 function closeQuizRecap(){
   stopRecapAudio();
@@ -2290,20 +2434,30 @@ function answerQuiz(w,chosen,btnEl){
   explainEl.style.display='block';
   if(chosen===w.correct){
     quizScore++; recordHit(w.id); soundCorrect();
-    quizStreak++;
+    quizStreak++; quizMissStreak=0;
     explainEl.className='quiz-explain correct';
     explainEl.textContent='Correct. '+w.explain;
+    if(quizStreak%10===0){ triggerStreakHaze('hot-intense'); soundFireworks(); }
+    else if(quizStreak%5===0){ triggerStreakHaze('hot'); }
   } else {
     btnEl.classList.add('wrong'); recordMiss(w.id); soundWrong();
-    quizStreak=0;
+    quizMissStreak++; quizStreak=0;
     explainEl.className='quiz-explain wrong';
     explainEl.textContent='Not quite — the answer is "'+w.correct+'." '+w.explain;
     quizMissed.push({cat:w.cat, q:w.q, chosen:chosen, correct:w.correct, explain:w.explain});
+    if(quizMissStreak%5===0) triggerStreakHaze('cold');
   }
   updateStreakUI();
   document.getElementById('quizScoreLabel').textContent=quizScore+' / '+quizQuestionsAnswered+' correct';
   document.getElementById('quizNextBtn').style.display='block';
   speakText(explainEl.textContent);
+}
+function triggerStreakHaze(kind){
+  const el=document.getElementById('streakHaze');
+  if(!el) return;
+  el.classList.remove('hot','hot-intense','cold');
+  void el.offsetWidth;
+  el.classList.add(kind);
 }
 function updateStreakUI(){
   const el=document.getElementById('qmStreak');
