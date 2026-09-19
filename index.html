@@ -336,6 +336,11 @@
   }
   .qm-streak.pop{animation:streakPop .35s ease;}
   @keyframes streakPop{0%{transform:scale(0.7);opacity:0;}100%{transform:scale(1);opacity:1;}}
+  .qm-timer{
+    background:linear-gradient(135deg,#CDE9FF,#A6D4FF);color:#0E3A5F;font-weight:800;font-size:12.5px;
+    padding:5px 12px;border-radius:100px;display:inline-flex;align-items:center;gap:5px;
+  }
+  .qm-timer.low{background:linear-gradient(135deg,#FCE7E1,#F6BFAF);color:#7A2E1D;}
   .qm-track{position:relative;height:12px;border-radius:7px;background:rgba(46,125,70,0.14);border:1px solid var(--line);}
   .qm-fill{height:100%;border-radius:7px;background:linear-gradient(90deg,var(--leaf),var(--sun),var(--amber));transition:width .5s;}
   .qm-flag{
@@ -346,6 +351,99 @@
   .quiz-explain{margin-top:14px;padding:14px 16px;border-radius:14px;font-size:0.9em;line-height:1.55;}
   .quiz-explain.correct{background:#DFF3E4;border:1.5px solid var(--forest);}
   .quiz-explain.wrong{background:#FCE7E1;border:1.5px solid var(--coral);}
+  /* ---------- Quiz session setup ---------- */
+  .quiz-setup-options{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+  .qs-mode-btn{
+    background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.25);color:#EAF6ED;
+    border-radius:14px;padding:12px 16px;text-align:left;cursor:pointer;transition:.15s;
+    display:flex;flex-direction:column;gap:2px;font-family:inherit;
+  }
+  .qs-mode-btn b{font-size:0.95em;}
+  .qs-mode-btn span{font-size:0.8em;color:#BFE0C9;font-weight:400;}
+  .qs-mode-btn:hover{border-color:var(--leaf-bright);}
+  .qs-mode-btn.active{background:linear-gradient(135deg,var(--leaf),var(--leaf-bright));border-color:var(--leaf-bright);color:#0E2617;}
+  .qs-mode-btn.active span{color:#1D3A24;}
+  .quiz-setup-detail{display:none;margin:0 auto 20px;max-width:220px;text-align:left;}
+  .quiz-setup-detail label{display:block;font-size:12px;font-weight:700;color:#BFE0C9;margin-bottom:6px;}
+  .quiz-setup-detail input{
+    width:100%;padding:9px 12px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.3);
+    background:rgba(255,255,255,0.1);color:#EAF6ED;font-size:14px;font-weight:700;
+  }
+  .qs-start-btn{
+    background:linear-gradient(135deg,var(--leaf),var(--leaf-bright));color:#0E2617;border:none;
+    padding:12px 28px;border-radius:100px;font-weight:800;cursor:pointer;font-size:14px;
+  }
+  /* ---------- Quiz recap ---------- */
+  .quiz-recap-card{max-width:500px;text-align:left;max-height:82vh;display:flex;flex-direction:column;}
+  .quiz-recap-card .cc-icon,.quiz-recap-card h3,.quiz-recap-card>p{text-align:center;}
+  .recap-list{overflow-y:auto;margin:4px 0 18px;display:flex;flex-direction:column;gap:12px;padding-right:2px;}
+  .recap-empty{text-align:center;color:var(--sub);font-size:0.9em;padding:10px 0;}
+  .recap-item{background:var(--panel-deep);border:1.5px solid var(--line);border-radius:14px;padding:13px 15px;}
+  .recap-item-cat{font-size:10.5px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:var(--forest);margin-bottom:5px;}
+  .recap-item-q{font-weight:700;color:var(--moss-deep);font-size:0.92em;line-height:1.4;margin-bottom:8px;}
+  .recap-item-you{font-size:0.85em;color:#7A2E1D;margin-bottom:3px;}
+  .recap-item-correct{font-size:0.85em;color:var(--moss-deep);margin-bottom:6px;}
+  .recap-item-explain{font-size:0.83em;line-height:1.5;color:var(--sub);}
+  .quiz-recap-card button{align-self:center;}
+
+  /* ---------- Session-complete: this box only — demands attention,
+     hard slate-black with fluorescent pink/yellow/green ---------- */
+  #quizRecapOverlay{
+    background:rgba(0,0,0,0.9);
+    animation:recapBackdropPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes recapBackdropPulse{
+    0%,100%{background:rgba(0,0,0,0.9);}
+    50%{background:rgba(10,0,10,0.95);}
+  }
+  #quizRecapOverlay .quiz-recap-card{
+    background:#0A0A0D;
+    border:3px solid transparent;
+    background-image:linear-gradient(#0A0A0D,#0A0A0D),linear-gradient(135deg,#FF2E9A,#F9FF3D,#39FF6E);
+    background-origin:border-box;background-clip:padding-box,border-box;
+    max-width:640px;max-height:92vh;
+    animation:recapCardPop .4s cubic-bezier(.22,1.4,.4,1), recapGlow 1.8s ease-in-out infinite .4s;
+  }
+  @keyframes recapCardPop{
+    0%{transform:scale(0.7);opacity:0;}
+    100%{transform:scale(1);opacity:1;}
+  }
+  @keyframes recapGlow{
+    0%,100%{box-shadow:0 0 0 4px rgba(255,46,154,0.18),0 0 40px rgba(57,255,110,0.3),0 20px 60px rgba(0,0,0,0.75);}
+    50%{box-shadow:0 0 0 7px rgba(249,255,61,0.28),0 0 75px rgba(255,46,154,0.55),0 20px 60px rgba(0,0,0,0.75);}
+  }
+  #quizRecapOverlay .cc-icon{filter:drop-shadow(0 0 10px rgba(249,255,61,0.8));}
+  #quizRecapOverlay h3{color:#F9FF3D;text-shadow:0 0 14px rgba(249,255,61,0.55);font-size:1.5em;}
+  #quizRecapOverlay > .quiz-recap-card > p{color:#F2F2F2;}
+  #quizRecapOverlay .recap-list{flex:1 1 auto;min-height:0;}
+  #quizRecapOverlay .recap-item{background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.16);}
+  #quizRecapOverlay .recap-item-cat{color:#39FF6E;}
+  #quizRecapOverlay .recap-item-q{color:#FFFFFF;}
+  #quizRecapOverlay .recap-item-you{color:#FF6EC7;}
+  #quizRecapOverlay .recap-item-correct{color:#F9FF3D;}
+  #quizRecapOverlay .recap-item-explain{color:#D8D8D8;}
+  #quizRecapOverlay .recap-empty{color:#D8D8D8;}
+  #quizRecapOverlay .recap-close-btn{
+    background:linear-gradient(135deg,#FF2E9A,#F9FF3D);color:#0A0A0D;border:none;
+    padding:12px 32px;border-radius:100px;font-weight:900;cursor:pointer;font-size:14px;
+    box-shadow:0 4px 22px rgba(255,46,154,0.45);
+  }
+  .recap-readaloud{
+    background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.14);border-radius:14px;
+    padding:13px 15px;margin-bottom:14px;
+  }
+  .recap-ra-label{font-size:11px;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:#39FF6E;margin-bottom:9px;}
+  .recap-ra-toggles{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:11px;}
+  .recap-ra-chip{
+    display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:#F5F5F5;
+    background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.2);border-radius:100px;
+    padding:6px 13px;cursor:pointer;
+  }
+  .recap-ra-chip input{accent-color:#FF2E9A;}
+  .recap-ra-controls{display:flex;gap:10px;}
+  .recap-ra-btn{border:none;border-radius:100px;padding:9px 20px;font-weight:800;font-size:12.5px;cursor:pointer;}
+  .recap-ra-btn.play{background:linear-gradient(135deg,#39FF6E,#F9FF3D);color:#0A0A0D;}
+  .recap-ra-btn.stop{background:rgba(255,46,154,0.14);color:#FF6EC7;border:1.5px solid #FF2E9A;}
   .quiz-next-btn{
     display:block;margin:16px auto 0;background:linear-gradient(135deg,var(--leaf),var(--forest));color:#fff;
     border:none;padding:12px 28px;border-radius:100px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;
@@ -563,6 +661,27 @@
       <div class="stage-score" id="quizScoreLabel">0 / 0 correct</div>
     </div>
     <div class="section-progress-dots" id="quizSectionDots"></div>
+    <div id="quizSetupWrap" style="display:none;">
+      <div class="section-intro-card">
+        <div class="si-icon">🌻</div>
+        <div class="si-eyebrow">Quiz Mode</div>
+        <h3>Set up this session</h3>
+        <div class="quiz-setup-options">
+          <button type="button" class="qs-mode-btn" data-mode="full" onclick="selectQuizMode('full')"><b>🌲 Full walk</b><span>every weak spot, reshuffled</span></button>
+          <button type="button" class="qs-mode-btn" data-mode="count" onclick="selectQuizMode('count')"><b>🎯 Question count</b><span>stop after a set number of questions</span></button>
+          <button type="button" class="qs-mode-btn" data-mode="time" onclick="selectQuizMode('time')"><b>⏱️ Timed session</b><span>stop when the clock runs out</span></button>
+        </div>
+        <div class="quiz-setup-detail" id="qsCountDetail">
+          <label for="qsCountInput">How many questions?</label>
+          <input type="number" id="qsCountInput" min="1" max="150" value="10">
+        </div>
+        <div class="quiz-setup-detail" id="qsTimeDetail">
+          <label for="qsTimeInput">How many minutes?</label>
+          <input type="number" id="qsTimeInput" min="1" max="120" value="10">
+        </div>
+        <button type="button" class="qs-start-btn" onclick="startQuizSession()">Start session →</button>
+      </div>
+    </div>
     <div id="quizIntroWrap" style="display:none;">
       <div class="section-intro-card">
         <div class="si-icon" id="quizIntroIcon"></div>
@@ -576,6 +695,7 @@
       <div class="quiz-meter" id="quizMeter">
         <div class="qm-top">
           <div class="qm-count"><span id="qmCurrent">1</span><span class="qm-of">/ <span id="qmTotal">0</span></span></div>
+          <div class="qm-timer" id="qmTimer" style="display:none;">⏱️ <span id="qmTimeLeft">0:00</span></div>
           <div class="qm-streak" id="qmStreak" style="display:none;">🔥 <span id="qmStreakNum">0</span> in a row</div>
         </div>
         <div class="qm-track">
@@ -633,6 +753,28 @@
     <h3 id="completeTitle">Nice work!</h3>
     <p id="completeSub"></p>
     <button onclick="document.getElementById('completeOverlay').classList.remove('open');goHome();">Back to the grove</button>
+  </div>
+</div>
+
+<div class="complete-overlay" id="quizRecapOverlay">
+  <div class="complete-card quiz-recap-card">
+    <div class="cc-icon" id="recapIcon">🌻</div>
+    <h3 id="recapTitle">Session complete!</h3>
+    <p id="recapSummary"></p>
+    <div class="recap-readaloud">
+      <div class="recap-ra-label">🔊 Read aloud — pick what you want to hear</div>
+      <div class="recap-ra-toggles">
+        <label class="recap-ra-chip"><input type="checkbox" id="raSummary" checked> Summary</label>
+        <label class="recap-ra-chip"><input type="checkbox" id="raQuestions" checked> Questions</label>
+        <label class="recap-ra-chip"><input type="checkbox" id="raExplain" checked> Explanations</label>
+      </div>
+      <div class="recap-ra-controls">
+        <button type="button" class="recap-ra-btn play" onclick="playRecapAudio()">▶ Play</button>
+        <button type="button" class="recap-ra-btn stop" onclick="stopRecapAudio()">⏸ Stop</button>
+      </div>
+    </div>
+    <div class="recap-list" id="recapList"></div>
+    <button class="recap-close-btn" onclick="closeQuizRecap()">Back to the grove</button>
   </div>
 </div>
 
@@ -1826,6 +1968,8 @@ function goHome(){
   document.getElementById('homeStage').classList.add('active');
   updateGroveProgress();
   renderTroublePanel();
+  if(quizTimerInterval){ clearInterval(quizTimerInterval); quizTimerInterval=null; }
+  quizSessionActive=false;
 }
 
 /* ============================================================
@@ -1902,16 +2046,154 @@ function flashJudge(gotIt){
    ============================================================ */
 let quizWalk=[], quizStepIdx=0, quizScore=0, quizAnswered=false, quizQuestionsAnswered=0;
 let quizStreak=0, quizMilestonesHit={};
+let quizMissed=[], quizSessionActive=false, quizPendingMode='full';
+let quizTimerInterval=null, quizTimeRemaining=0;
 function openQuiz(){
   hideAllStages();
   document.getElementById('quizStage').classList.add('active');
+  document.getElementById('quizSetupWrap').style.display='block';
+  document.getElementById('quizIntroWrap').style.display='none';
+  document.getElementById('quizQuestionWrap').style.display='none';
+  document.getElementById('quizSectionDots').innerHTML='';
+  selectQuizMode('full');
+}
+function selectQuizMode(mode){
+  quizPendingMode=mode;
+  document.querySelectorAll('.qs-mode-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.mode===mode); });
+  document.getElementById('qsCountDetail').style.display = mode==='count' ? 'block' : 'none';
+  document.getElementById('qsTimeDetail').style.display = mode==='time' ? 'block' : 'none';
+}
+function startQuizSession(){
+  soundClick();
   quizWalk=buildSectionWalk();
+  if(quizPendingMode==='count'){
+    const n=Math.max(1, parseInt(document.getElementById('qsCountInput').value,10)||10);
+    let qSeen=0, cut=quizWalk.length;
+    for(let i=0;i<quizWalk.length;i++){
+      if(quizWalk[i].type==='question'){
+        qSeen++;
+        if(qSeen>=n){ cut=i+1; break; }
+      }
+    }
+    quizWalk=quizWalk.slice(0,cut);
+  }
   quizStepIdx=0; quizScore=0; quizQuestionsAnswered=0;
-  quizStreak=0; quizMilestonesHit={};
+  quizStreak=0; quizMilestonesHit={}; quizMissed=[]; quizSessionActive=true;
   document.getElementById('qmStreak').style.display='none';
   document.getElementById('qmTotal').textContent=walkQuestionCount(quizWalk);
   ['25','50','75'].forEach(function(m){ document.getElementById('qmFlag'+m).classList.remove('lit'); });
+  document.getElementById('quizSetupWrap').style.display='none';
+  clearInterval(quizTimerInterval); quizTimerInterval=null;
+  const qmTimerEl=document.getElementById('qmTimer');
+  if(quizPendingMode==='time'){
+    const mins=Math.max(1, parseInt(document.getElementById('qsTimeInput').value,10)||10);
+    qmTimerEl.style.display='inline-flex';
+    qmTimerEl.classList.remove('low');
+    startQuizTimer(mins*60);
+  } else {
+    qmTimerEl.style.display='none';
+  }
   renderQuiz();
+}
+function startQuizTimer(seconds){
+  quizTimeRemaining=seconds;
+  updateQuizTimerUI();
+  quizTimerInterval=setInterval(function(){
+    quizTimeRemaining--;
+    updateQuizTimerUI();
+    if(quizTimeRemaining<=0) endQuizSession('time');
+  },1000);
+}
+function updateQuizTimerUI(){
+  const el=document.getElementById('qmTimeLeft');
+  if(!el) return;
+  const clamped=Math.max(0,quizTimeRemaining);
+  const m=Math.floor(clamped/60), s=clamped%60;
+  el.textContent=m+':'+String(s).padStart(2,'0');
+  const wrap=document.getElementById('qmTimer');
+  if(wrap) wrap.classList.toggle('low', clamped<=30);
+}
+let recapAmbientWasOn=false;
+function endQuizSession(reason){
+  if(!quizSessionActive) return;
+  quizSessionActive=false;
+  clearInterval(quizTimerInterval); quizTimerInterval=null;
+  // this box takes over: cut any narration or ambient loop already running
+  // so it isn't fighting with the recap for attention
+  try{ if(window.speechSynthesis) window.speechSynthesis.cancel(); }catch(e){}
+  recapAmbientWasOn=ambientOn;
+  if(ambientOn){ ambientOn=false; stopAmbient(); ambientOn=true; }
+  const totalAnswered=quizQuestionsAnswered;
+  const pct=totalAnswered ? Math.round(quizScore/totalAnswered*100) : 0;
+  document.getElementById('recapIcon').textContent = pct>=85 ? '🌟' : '🌻';
+  document.getElementById('recapTitle').textContent = reason==='time' ? "Time's up!" : 'Session complete!';
+  document.getElementById('recapSummary').textContent = totalAnswered
+    ? (quizScore+' / '+totalAnswered+' correct ('+pct+'%). '+(quizMissed.length ? 'Here’s what to look back over:' : 'Clean sweep this round — nothing to review.'))
+    : 'No questions answered this session.';
+  renderQuizRecap();
+  document.getElementById('quizRecapOverlay').classList.add('open');
+  soundMilestone();
+}
+let recapSpeechQueue=[], recapSpeechPlaying=false;
+function buildRecapSpeechQueue(){
+  const queue=[];
+  const wantSummary=document.getElementById('raSummary').checked;
+  const wantQuestions=document.getElementById('raQuestions').checked;
+  const wantExplain=document.getElementById('raExplain').checked;
+  if(wantSummary){
+    queue.push(document.getElementById('recapTitle').textContent+'. '+document.getElementById('recapSummary').textContent);
+  }
+  quizMissed.forEach(function(m,i){
+    let seg='';
+    if(wantQuestions) seg += 'Missed question '+(i+1)+', '+m.cat+'. '+m.q+'. ';
+    if(wantExplain) seg += 'The correct answer is '+m.correct+'. '+m.explain;
+    else if(wantQuestions) seg += 'The correct answer is '+m.correct+'.';
+    if(seg) queue.push(seg);
+  });
+  return queue;
+}
+function playRecapAudio(){
+  if(!window.speechSynthesis) return;
+  stopRecapAudio();
+  recapSpeechQueue=buildRecapSpeechQueue();
+  if(!recapSpeechQueue.length) return;
+  recapSpeechPlaying=true;
+  speakRecapNext();
+}
+function speakRecapNext(){
+  if(!recapSpeechPlaying || !recapSpeechQueue.length){ recapSpeechPlaying=false; return; }
+  const text=recapSpeechQueue.shift();
+  const utter=new SpeechSynthesisUtterance(text);
+  utter.rate=0.98; utter.pitch=1;
+  const v=getSelectedVoice(); if(v) utter.voice=v;
+  utter.onend=function(){ if(recapSpeechPlaying) speakRecapNext(); };
+  try{ window.speechSynthesis.speak(utter); }catch(e){ recapSpeechPlaying=false; }
+}
+function stopRecapAudio(){
+  recapSpeechPlaying=false; recapSpeechQueue=[];
+  try{ window.speechSynthesis.cancel(); }catch(e){}
+}
+function renderQuizRecap(){
+  const listEl=document.getElementById('recapList');
+  if(!quizMissed.length){
+    listEl.innerHTML='<div class="recap-empty">Clean sweep — nothing missed this session. 🌟</div>';
+    return;
+  }
+  listEl.innerHTML=quizMissed.map(function(m){
+    return '<div class="recap-item">'+
+      '<div class="recap-item-cat">'+m.cat+'</div>'+
+      '<div class="recap-item-q">'+m.q+'</div>'+
+      '<div class="recap-item-you">You said: <b>'+m.chosen+'</b></div>'+
+      '<div class="recap-item-correct">Correct: <b>'+m.correct+'</b></div>'+
+      '<div class="recap-item-explain">'+m.explain+'</div>'+
+    '</div>';
+  }).join('');
+}
+function closeQuizRecap(){
+  stopRecapAudio();
+  document.getElementById('quizRecapOverlay').classList.remove('open');
+  if(recapAmbientWasOn && ambientOn) startAmbient();
+  goHome();
 }
 function renderQuizSectionDots(){
   const dotsEl=document.getElementById('quizSectionDots');
@@ -1923,9 +2205,7 @@ function renderQuizSectionDots(){
 }
 function renderQuiz(){
   if(quizStepIdx>=quizWalk.length){
-    const total=walkQuestionCount(quizWalk);
-    const pct=Math.round(quizScore/total*100);
-    showComplete('🌻','Quiz round done!', quizScore+' / '+total+' correct ('+pct+'%). '+(pct>=85?"That's a strong grove — those aren't weak spots anymore.":"Run it again, reshuffled — keep leaning on the ones that trip you up."));
+    endQuizSession('done');
     return;
   }
   renderQuizSectionDots();
@@ -2018,6 +2298,7 @@ function answerQuiz(w,chosen,btnEl){
     quizStreak=0;
     explainEl.className='quiz-explain wrong';
     explainEl.textContent='Not quite — the answer is "'+w.correct+'." '+w.explain;
+    quizMissed.push({cat:w.cat, q:w.q, chosen:chosen, correct:w.correct, explain:w.explain});
   }
   updateStreakUI();
   document.getElementById('quizScoreLabel').textContent=quizScore+' / '+quizQuestionsAnswered+' correct';
